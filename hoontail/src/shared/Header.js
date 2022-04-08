@@ -18,7 +18,7 @@ export default Header;
 
 const Nav = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   position: fixed;
   top: 0;
@@ -30,7 +30,9 @@ const Nav = styled.div`
 `;
 
 const Btns = styled.div`
-  float : right;
+  /* float : right; */
+  display: flex;
+  
 `;
 
 

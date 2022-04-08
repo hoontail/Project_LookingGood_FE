@@ -17,6 +17,7 @@ const We = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
- 
+  /* position: fixed; */
+  /* bottom : 0; */
   background-color: gray;
 `;

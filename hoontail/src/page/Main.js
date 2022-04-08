@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import Footer from "../shared/Footer";
 function Main(props) {
   return (
     <>
@@ -14,6 +14,7 @@ function Main(props) {
         <Menu><P>FOOD</P></Menu>
         <Menu><P>TEAM</P></Menu>
       </Container>
+      <Footer/>
     </>
   );
 }
