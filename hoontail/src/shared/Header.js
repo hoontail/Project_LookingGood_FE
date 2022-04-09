@@ -34,6 +34,7 @@ const Nav = styled.div`
   width: 100%;
   margin: 0 0;
   height: 100px;
+  max-height: 10vh;
   background-color: #fafafa;
 `;
 

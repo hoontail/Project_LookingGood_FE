@@ -1,12 +1,12 @@
 import React from "react"
 import styled from "styled-components"
 
-function Kategorie(props){
-
+function Category(props){
+const { _onChange} = props
 
     return(
         <>
-        <Choice name="Kategorie">
+        <Choice onChange={_onChange} name="Category">
             <option value="SKY">SKY</option>
             <option value="TEAM">TEAM</option>
             <option value="FOOD">FOOD</option>
@@ -19,11 +19,11 @@ function Kategorie(props){
 }
 
 
-export default Kategorie
+export default Category
 
 
 const Choice = styled.select`
-  width: 15vw;
+  width: 10vw;
   height: 30px;
   background-color: #fafafa;
   border: none;
