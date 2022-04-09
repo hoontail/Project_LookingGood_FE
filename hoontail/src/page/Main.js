@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import Footer from "../shared/Footer";
+
 function Main(props) {
   return (
     <>
       <Container>
+     
         <Menu>
           <P>DIARY</P>
         </Menu>
@@ -22,9 +24,9 @@ function Main(props) {
 export default Main;
 
 const Container = styled.div`
-  max-width: 100%;
-  height: 100%;
-  margin: 20px 0px 0px 0px;
+  max-width: 100vw;
+  height: 100vh;
+  /* margin: 20px 0px 0px 0px; */
   display: flex;
   flex-wrap: wrap;
   flex-direction: row; /* justify-content: center; */
@@ -33,12 +35,14 @@ const Container = styled.div`
   /* border: 3px solid black; */
   justify-content: center;
   background-color: #fafafa;
+
 `;
+
 
 const Menu = styled.div`
   max-width: 430px;
   width: 500px;
-  height: 400px;
+  height: 300px;
   margin: 60px;
   /* background-color: blue; */
   display: flex;

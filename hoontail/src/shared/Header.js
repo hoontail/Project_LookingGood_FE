@@ -2,13 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import LoginBar from "../components/LoginBar";
 import Grid from "../elements/Grid";
+import logo from "../img/logo.png";
+
 function Header(props) {
   return (
     <>
       <Nav>
-          <Grid is_flex padding ="0px 0px 0px 16px"> 로고</Grid>
-          <Btns>  <LoginBar></LoginBar></Btns>
-      
+        <Imgbox>
+          <Grid padding="10px" >
+            <img src={logo} width="130px" />
+          </Grid>
+        </Imgbox>
+
+        <Grid is_flex padding="0px 0px 0px 16px"></Grid>
+        <Btns>
+          <LoginBar></LoginBar>
+        </Btns>
       </Nav>
     </>
   );
@@ -26,13 +35,13 @@ const Nav = styled.div`
   margin: 0 0;
   height: 100px;
   background-color: #fafafa;
- 
 `;
 
 const Btns = styled.div`
   /* float : right; */
   display: flex;
-  
 `;
 
-
+const Imgbox = styled.div`
+  padding: 20px 20px;
+`;
