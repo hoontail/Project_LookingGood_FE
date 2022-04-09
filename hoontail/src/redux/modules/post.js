@@ -14,12 +14,12 @@ const initialState = {
 };
 
 
-const addPostDB = (post ) => {
+const addPostDB = (post) => {
   return async function (dispatch, getState,) {
-    axios.post('/api/posts',
-    {}
-    )
-    
+    // axios.post('/api/posts',
+    // {}
+    // )
+    console.log(post)
   };
 };
 

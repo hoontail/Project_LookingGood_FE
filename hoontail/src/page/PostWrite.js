@@ -4,17 +4,33 @@ import Category from "../components/Category";
 import Image from "../components/Image";
 import Input from "../elements/Input";
 import { useSelector, useDispatch } from "react-redux";
-import  { actionCreators as postActions} from "../redux/modules/post"
-
-
+import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as imageActions } from "../redux/modules/image";
 function PostWrite(props) {
-    const dispatch = useDispatch();
-
-  const [cate, setCate] = React.useState("");
+  const dispatch = useDispatch();
+  const preview = useSelector((state) => state.image.preview);
+  
+  
+  const fileInput = React.useRef();
+  const [category, setCate] = React.useState("SKY");
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
 
+
+
+  const selectFile = (e) => {
+    // console.log(e.target.files);
+    const reader = new FileReader();
+    const file = fileInput.current.files[0];
+
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+
+      dispatch(imageActions.setPreview(reader.result));
+    };
+  };
   
+
   const changeCate = (e) => {
     setCate(e.target.value);
   };
@@ -25,11 +41,9 @@ function PostWrite(props) {
     setContent(e.target.value);
   };
 
-const post = {title, cate, content} 
-
-const addPost = 
-
-console.log(post)
+  const post = { title, category, content, preview };
+  console.log(post)
+  const addPostDB = () => dispatch(postActions.addPostDB(post));
 
   return (
     <>
@@ -44,9 +58,13 @@ console.log(post)
           ></Input>
           <Image
             shape="rectangle"
-            src="https://scontent-ssn1-1.xx.fbcdn.net/v/t1.6435-9/34536761_1671128712923275_5353672757324283904_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGnHbn1pRVxTStrGMKvjUo_KLOy8OQ0Q58os7Lw5DRDnyMbdGM3Mzlku5kyCRmpIxk&_nc_ohc=tlTf0il44FsAX_Mvx30&tn=lo8VY0LKkuWEc3Kp&_nc_ht=scontent-ssn1-1.xx&oh=00_AT_SQ87lZSPSRL3axVUO9KnlnWQGRq4ardYEEXB3xC4ZWg&oe=62764050"
+            src={
+                preview
+                ? preview
+                : "https://scontent-ssn1-1.xx.fbcdn.net/v/t1.6435-9/34536761_1671128712923275_5353672757324283904_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGnHbn1pRVxTStrGMKvjUo_KLOy8OQ0Q58os7Lw5DRDnyMbdGM3Mzlku5kyCRmpIxk&_nc_ohc=tlTf0il44FsAX_Mvx30&tn=lo8VY0LKkuWEc3Kp&_nc_ht=scontent-ssn1-1.xx&oh=00_AT_SQ87lZSPSRL3axVUO9KnlnWQGRq4ardYEEXB3xC4ZWg&oe=62764050"
+            }
           />
-          <AddImage type="file" />
+          <AddImage type="file" ref={fileInput} onChange={selectFile} />
           <Input
             multiLine
             value={content}
@@ -54,7 +72,7 @@ console.log(post)
             _onChange={changeContent}
           />
         </AddBox>
-        <AddBtn>작성하기</AddBtn>
+        <AddBtn onClick={addPostDB}>작성하기</AddBtn>
       </Container>
     </>
   );
