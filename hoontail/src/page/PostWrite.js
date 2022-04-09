@@ -3,7 +3,13 @@ import styled from "styled-components";
 import Category from "../components/Category";
 import Image from "../components/Image";
 import Input from "../elements/Input";
+import { useSelector, useDispatch } from "react-redux";
+import  { actionCreators as postActions} from "../redux/modules/post"
+
+
 function PostWrite(props) {
+    const dispatch = useDispatch();
+
   const [cate, setCate] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
@@ -20,6 +26,8 @@ function PostWrite(props) {
   };
 
 const post = {title, cate, content} 
+
+const addPost = 
 
 console.log(post)
 
