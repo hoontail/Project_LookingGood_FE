@@ -2,22 +2,50 @@ import React from "react";
 import styled from "styled-components";
 import team from "../imagegroup/team.jpg";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
   const history = useHistory();
+  const [id, setId] = useState("");
+  const [pwd, setPwd] = useState("");
+
+  const idCheck = (id) => {
+    let _reg = /^[0-9a-zA-Z]([-_.0-9a-zA-Z])/;
+
+  return _reg.test(id);
+  }
+  
+  const login = () => {
+    if(id === "" || pwd === ""){
+      window.alert("아이디 혹은 비밀번호가 공란입니다! 입력해주세요!");
+      return;
+    }
+
+    if(!idCheck(id)){
+      window.alert("아이디의 첫번째 자리에는 특수문자가 올 수 없습니다.");
+      return;
+    }
+  }
+
   return (
     <Whole>
       <Photo src={team} />
       <Loginbox>
         <Title>로그인</Title>
         <Info>
-          <InputBox type="id" placeholder="아이디를 입력해주세요"></InputBox>
-          <InputBox
+          <InputBox onChange={(e) => {
+            setId(e.target.value);
+          }} type="text" placeholder="아이디를 입력해주세요"></InputBox>
+          <InputBox onChange={(e) => {
+            setPwd(e.target.value);
+          }}
             type="password"
             placeholder="패스워드를 입력해주세요."
           ></InputBox>
         </Info>
-        <Button>로그인하기</Button>
+        <Button onClick={() => {
+          login();
+        }}>로그인하기</Button>
         <Question>회원이 아니신가요? <span onClick={() => {
           history.push('/signup')
         }}>가입하기</span></Question>

@@ -2,30 +2,75 @@ import React from "react";
 import styled from "styled-components";
 import team from "../imagegroup/team.jpg";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 const Signup = () => {
+  const [id, setId] = useState("");
+  const [url, setUrl] = useState("");
+  const [pwd, setPwd] = useState(""); 
+  const [pwdCheck, setPwdCheck] = useState(""); 
   const history = useHistory();
+
+  const signup = () => {
+    const idCheck = (id) => {
+      let _reg = /^[0-9a-zA-Z]([-_.0-9a-zA-Z])/;
+  
+      return _reg.test(id);
+    }
+
+    if (id === "" || pwd === "" || url === "") {
+      window.alert("아이디, 패스워드, URL을 모두 입력해주세요!");
+      return;
+    }
+
+    if(!idCheck(id)){
+      window.alert('아이디의 첫번째 자리에는 특수문자가 올 수 없습니다.');
+      return;
+    }
+    
+    if (pwd !== pwdCheck) {
+      window.alert("패스워드와 패스워드 확인이 일치하지 않습니다!");
+      return;
+    }
+
+    console.log(id,pwd)
+  }
+  
+
   return (
     <Whole>
       <Photo src={team} />
       <Signbox>
         <Title>회원가입</Title>
         <Info>
-          <InputBox type="id" placeholder="아이디를 입력해주세요"></InputBox>
           <InputBox
+            onChange={(e) => {
+            setId(e.target.value)
+          }}type="text" placeholder="아이디를 입력해주세요"></InputBox>
+          <InputBox 
+            onChange={(e) => {
+              setUrl(e.target.value)
+            }}
             type="url"
             placeholder="프로필 사진의 URL을 정확하게 입력해주세요."
           ></InputBox>
-          <InputBox
+          <InputBox onChange={(e) => {
+            setPwd(e.target.value)
+          }}
             type="password"
             placeholder="패스워드를 입력해주세요."
           ></InputBox>
-          <InputBox
+          <InputBox onChange={(e) => {
+            setPwdCheck(e.target.value)
+          }}
             type="password"
             placeholder="패스워드를 다시 한번 입력해주세요."
           ></InputBox>
         </Info>
-        <Mybtn>회원가입하기</Mybtn>
+        <Mybtn onClick={() => {
+          signup();
+          history.push('/login');
+        }}>회원가입하기</Mybtn>
       </Signbox>
     </Whole>
   );
@@ -92,6 +137,7 @@ const InputBox = styled.input`
 `;
 
 const Mybtn = styled.button`
+  box-sizing: border-box;
   background-color: #fafafa;
   border: 1px solid black;
   border-radius: 8px;
