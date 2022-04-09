@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-
+import Image from "./Image";
 function LoginBar(props) {
   return (
     <>
       <BtnGroup>
-        <Btn>로그인</Btn>
-        <Btn>회원가입</Btn>
-        {/* <Btn>프로필</Btn> */}
-        {/* <Btn>로그아웃</Btn> */}
+        {/* <Btn>로그인</Btn> */}
+        {/* <Btn>회원가입</Btn> */}
+       <Image shape= "circle"></Image>
+        <Btn>LeeTaeHoon</Btn>
+        <Btn>로그아웃</Btn>
       </BtnGroup>
     </>
   );
@@ -25,14 +26,17 @@ const BtnGroup = styled.div`
 const Btn = styled.button`
   margin-right : 50px;
   width : 90px;
-  height: 30px;
+  height: 50px;
   flex-direction: row;
   border-radius: 20px;
-  border: 1px solid #394481;
+  border: none;
   background-color: #fafafa;
+  font-size: 16px;
+  cursor: pointer;
   &:hover{  
     background-color : #394481;
     /* #FF385C; */
     color : white;
   }
 `;
+

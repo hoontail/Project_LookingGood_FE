@@ -5,7 +5,7 @@ function Footer(props) {
   return (
     <>
       <We>좋은 거 같은데요?</We>
-      <We>이태훈 김윤하 윤석일 성영호 이성영 김정태</We>
+      <We>FE 이태훈 이성영 김정태 BE 김윤하 윤석일 성영호 </We>
     </>
   );
 }
@@ -18,6 +18,6 @@ const We = styled.div`
   justify-content: center;
   align-items: center;
   /* position: fixed; */
-  /* bottom : 0; */
+  bottom : 0;
   background-color: gray;
 `;
