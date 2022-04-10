@@ -12,18 +12,26 @@ const initialState = {
   list: [],
 };
 
-const addPostDB = (post) => {
-  
+const addPostDB = (post) => { 
   return async function (dispatch, getState) {
-     const _post = {
-       category : post.post.category,
-       title : post.post.title,
-       content : post.post.content,
-      imgUrl : post.preview,
-      userId : "",
-      createdAt:""
-     } 
-     console.log(_post)
+    console.log(post)
+   
+   
+   
+   
+   
+    //  const _post = {
+    //    category : post.post.category,
+    //    title : post.post.title,
+    //    content : post.post.content,
+    //   imgUrl : post.preview,
+    //   userId : "",
+    //   createdAt:""
+    //  } 
+    //  console.log(_post)
+    
+    
+    
     // axios
     //   .post(
     //     "https://6251cd8b7f7fa1b1dddf39b0.mockapi.io",
@@ -32,7 +40,7 @@ const addPostDB = (post) => {
     //       category: post.post.category,
     //       title: post.post.title,
     //       content: post.post.content,
-    //       imgUrl: post.preview,
+    //       // imgUrl: post.preview,
     //       userId: "",
     //       createdAt: "",
     //     }
@@ -45,6 +53,11 @@ const addPostDB = (post) => {
     //   });
   };
 };
+
+
+
+
+
 
 export default handleActions(
   {

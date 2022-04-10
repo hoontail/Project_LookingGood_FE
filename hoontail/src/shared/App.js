@@ -13,7 +13,7 @@ function App() {
        
         <Route path="/" component={Main} exact/>
         <Route path="/write" component={PostWrite}/>
-        <Route path="/edit" component={PostEdit} exact/>
+        <Route path="/edit/:id" component={PostEdit} exact/>
       </BrowserRouter>
   
     </>

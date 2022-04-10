@@ -9,10 +9,10 @@ import { actionCreators as imageActions } from "../redux/modules/image";
 function PostWrite(props) {
   const dispatch = useDispatch();
   const preview = useSelector((state) => state.image.preview);
-    
   const fileInput = React.useRef();
   const [post , setPost] = React.useState({
     title: "",
+    imgUrl:"",
     category : "SKY",
     content : ""
   })
@@ -30,14 +30,25 @@ function PostWrite(props) {
     };
   };
   
+
  // computed property names 문법 (키값 동적 할당)
   const handleForm = (e) => {
       setPost({
           ...post,
           [e.target.name]: e.target.value,
+          
       })
   }
-  let postData = {post , preview}
+
+const formData = new FormData()
+formData.append('imageUrl', fileInput.current.files[0])
+formData.append('title', post.title)
+// for (var pair of formData.entries()) {
+//     console.log(pair[0]+ ', ' + pair[1]); 
+// }
+
+
+  let postData = {post , fileInput}
   const addPostDB = () => {
     if(post.title ==="" ||post.content==="") {
         window.alert("내용을 추가 해 주세요")
@@ -46,6 +57,10 @@ function PostWrite(props) {
     
     
     dispatch(postActions.addPostDB(postData));}
+
+
+
+
 
   return (
     <>

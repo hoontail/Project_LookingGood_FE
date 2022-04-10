@@ -4,18 +4,21 @@ import Category from "../components/Category";
 import Image from "../elements/Image";
 import Input from "../elements/Input";
 function PostWrite(props) {
-  const [post , setPost] = React.useState({
+  const post_id = props.match.params.id
+  console.log(post_id)
+  const [post, setPost] = React.useState({
     title: "",
-    category : "SKY",
-    content : ""
-  })
+    category: "SKY",
+    content: "",
+  });
   const handleForm = (e) => {
     setPost({
-        ...post,
-        [e.target.name]: e.target.value,
-    })
-} 
- 
+      ...post,
+      [e.target.name]: e.target.value,
+    });
+  };
+  
+
 
   return (
     <>
@@ -27,7 +30,7 @@ function PostWrite(props) {
             placeholder="제목을 입력 해주세요"
             value={post.title}
             _onChange={handleForm}
-            name = 'title'
+            name="title"
           ></Input>
           <Image
             shape="rectangle"
@@ -39,10 +42,10 @@ function PostWrite(props) {
             value={post.content}
             placeholder="내용을 입력 해주세요"
             _onChange={handleForm}
-            name = 'content'
+            name="content"
           />
         </AddBox>
-        <AddBtn>작성하기</AddBtn>
+        <AddBtn>수정하기</AddBtn>
       </Container>
     </>
   );
