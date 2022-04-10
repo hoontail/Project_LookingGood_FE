@@ -16,8 +16,9 @@ const initialState = {
 
 const addPostDB = (post) => {
   return async function (dispatch, getState,) {
+   let imageUrl =post.preview
     // axios.post('/api/posts',
-    // {}
+    // { }
     // )
     console.log(post)
   };

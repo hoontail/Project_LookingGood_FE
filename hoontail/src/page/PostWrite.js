@@ -12,10 +12,14 @@ function PostWrite(props) {
   
   
   const fileInput = React.useRef();
-  const [category, setCate] = React.useState("SKY");
-  const [title, setTitle] = React.useState("");
-  const [content, setContent] = React.useState("");
-
+//   const [category, setCate] = React.useState("SKY");
+//   const [title, setTitle] = React.useState("");
+//   const [content, setContent] = React.useState("");   한번에 가능 
+  const [post , setPost] = React.useState({
+    title: "",
+    category : "SKY",
+    content : ""
+  })
 
 
   const selectFile = (e) => {
@@ -30,31 +34,42 @@ function PostWrite(props) {
     };
   };
   
+ // computed property names 문법 (키값 동적 할당)
+  const handleForm = (e) => {
+      setPost({
+          ...post,
+          [e.target.name]: e.target.value,
+      })
 
-  const changeCate = (e) => {
-    setCate(e.target.value);
-  };
-  const changeTitle = (e) => {
-    setTitle(e.target.value);
-  };
-  const changeContent = (e) => {
-    setContent(e.target.value);
-  };
+  }
 
-  const post = { title, category, content, preview };
-  console.log(post)
-  const addPostDB = () => dispatch(postActions.addPostDB(post));
+
+
+ //   const changeCate = (e) => {
+//     setPost({category : e.target.value});
+//   };
+//   const changeTitle = (e) => {
+//     setPost({title :e.target.value});
+//   }; 
+//   const changeContent = (e) => {
+//     setPost({content: e.target.value});
+//   };
+
+//   const postdata = { title, category, content, preview };
+ 
+  const addPostDB = () => dispatch(postActions.addPostDB());
 
   return (
     <>
       <Container>
         <h2>게시글 작성</h2>
         <AddBox>
-          <Category _onChange={changeCate} />
+          <Category _onChange={handleForm} />
           <Input
+            name = "title"
             placeholder="제목을 입력 해주세요"
-            value={title}
-            _onChange={changeTitle}
+            value={post.title}
+            _onChange={handleForm}        
           ></Input>
           <Image
             shape="rectangle"
@@ -67,9 +82,11 @@ function PostWrite(props) {
           <AddImage type="file" ref={fileInput} onChange={selectFile} />
           <Input
             multiLine
-            value={content}
+            name = "content"
+            value={post.content}
             placeholder="내용을 입력 해주세요"
-            _onChange={changeContent}
+            _onChange={handleForm}
+           
           />
         </AddBox>
         <AddBtn onClick={addPostDB}>작성하기</AddBtn>
