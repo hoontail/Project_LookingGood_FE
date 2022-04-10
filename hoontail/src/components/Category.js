@@ -6,7 +6,7 @@ const { _onChange} = props
 
     return(
         <>
-        <Choice onChange={_onChange} name="Category">
+        <Choice onChange={_onChange} name="category">
             <option value="SKY">SKY</option>
             <option value="TEAM">TEAM</option>
             <option value="FOOD">FOOD</option>
