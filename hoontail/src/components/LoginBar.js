@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Image from "./Image";
+import Image from "../elements/Image";
 function LoginBar(props) {
   return (
     <>

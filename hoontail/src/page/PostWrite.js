@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Category from "../components/Category";
-import Image from "../components/Image";
+import Image from "../elements/Image";
 import Input from "../elements/Input";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -37,8 +37,15 @@ function PostWrite(props) {
           [e.target.name]: e.target.value,
       })
   }
-
-  const addPostDB = () => dispatch(postActions.addPostDB());
+  let postData = {post , preview}
+  const addPostDB = () => {
+    if(post.title ==="" ||post.content==="") {
+        window.alert("내용을 추가 해 주세요")
+        return;
+    } 
+    
+    
+    dispatch(postActions.addPostDB(postData));}
 
   return (
     <>

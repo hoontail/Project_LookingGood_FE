@@ -1,38 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 import Category from "../components/Category";
-import Image from "../components/Image";
+import Image from "../elements/Image";
 import Input from "../elements/Input";
 function PostWrite(props) {
-  const [cate, setCate] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [content, setContent] = React.useState("");
-
-  
-  const changeCate = (e) => {
-    setCate(e.target.value);
-  };
-  const changeTitle = (e) => {
-    setTitle(e.target.value);
-  };
-  const changeContent = (e) => {
-    setContent(e.target.value);
-  };
-
-const post = {title, cate, content} 
-
-console.log(post)
+  const [post , setPost] = React.useState({
+    title: "",
+    category : "SKY",
+    content : ""
+  })
+  const handleForm = (e) => {
+    setPost({
+        ...post,
+        [e.target.name]: e.target.value,
+    })
+} 
+ 
 
   return (
     <>
       <Container>
-        <h2>게시글 작성</h2>
+        <h2>게시글 수정</h2>
         <AddBox>
-          <Category _onChange={changeCate} />
+          <Category _onChange={handleForm} />
           <Input
             placeholder="제목을 입력 해주세요"
-            value={title}
-            _onChange={changeTitle}
+            value={post.title}
+            _onChange={handleForm}
+            name = 'title'
           ></Input>
           <Image
             shape="rectangle"
@@ -41,9 +36,10 @@ console.log(post)
           <AddImage type="file" />
           <Input
             multiLine
-            value={content}
+            value={post.content}
             placeholder="내용을 입력 해주세요"
-            _onChange={changeContent}
+            _onChange={handleForm}
+            name = 'content'
           />
         </AddBox>
         <AddBtn>작성하기</AddBtn>
