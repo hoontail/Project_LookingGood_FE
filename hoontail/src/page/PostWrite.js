@@ -9,12 +9,8 @@ import { actionCreators as imageActions } from "../redux/modules/image";
 function PostWrite(props) {
   const dispatch = useDispatch();
   const preview = useSelector((state) => state.image.preview);
-  
-  
+    
   const fileInput = React.useRef();
-//   const [category, setCate] = React.useState("SKY");
-//   const [title, setTitle] = React.useState("");
-//   const [content, setContent] = React.useState("");   한번에 가능 
   const [post , setPost] = React.useState({
     title: "",
     category : "SKY",
@@ -40,23 +36,8 @@ function PostWrite(props) {
           ...post,
           [e.target.name]: e.target.value,
       })
-
   }
 
-
-
- //   const changeCate = (e) => {
-//     setPost({category : e.target.value});
-//   };
-//   const changeTitle = (e) => {
-//     setPost({title :e.target.value});
-//   }; 
-//   const changeContent = (e) => {
-//     setPost({content: e.target.value});
-//   };
-
-//   const postdata = { title, category, content, preview };
- 
   const addPostDB = () => dispatch(postActions.addPostDB());
 
   return (
