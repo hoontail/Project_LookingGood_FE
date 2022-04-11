@@ -48,7 +48,17 @@ const initialState = [
 
 const addPostDB = (post) => { 
   return async function (dispatch, getState) {
-    console.log(post)
+//     console.log(post)
+//     for (var pair of post.entries()) {
+//       console.log(pair[0]+ ', ' + pair[1]);
+//  }
+    // axios({
+    //   method: "post",
+    //   url: 'http://3.35.174.45/api/post',
+    //   data: post,
+    //   headers: 
+    //   { "Content-Type": "multipart/form-data", 
+    //   Authorization: localStorage.getItem("access_token") }})
 
     //  const _post = {
     //    category : post.post.category,
@@ -62,8 +72,7 @@ const addPostDB = (post) => {
     
     
     
-    // axios
-    //   .post(
+    // axios.post(
     //     "https://6251cd8b7f7fa1b1dddf39b0.mockapi.io",
 
     //     {

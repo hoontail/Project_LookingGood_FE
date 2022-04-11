@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Header";
-import { Login, Signup, Main, PostWrite, Postlist, DetailPage}from "../page/pages";
+import { Login, Signup, Main, PostWrite, Postlist, DetailPage} from "../page/pages";
 import { BrowserRouter, Route } from "react-router-dom";
 
 
@@ -11,6 +11,7 @@ function App() {
     <Header/>
       <BrowserRouter>      
         <Route path="/" component={Main} exact/>
+        <Route  component={Header}/>
         <Route path="/write" component={PostWrite}/>
         <Route path="/login" component={Login}/>
         <Route path="/signup" component={Signup}/>

@@ -1,28 +1,38 @@
 import React from "react";
+import { useHistory, } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Footer from "../shared/Footer";
 
 function Main(props) {
+ const history = useHistory()
+
   return (
     <>
       <Container>
         <Menu>
-          <P>TEAM</P>
+          <P onClick={()=>
+          history.push('/list/TEAM')}>TEAM</P>
         </Menu>
         <Menu>
-          <P>ALGORITHM</P>
+          <P onClick={()=>
+          history.push('/list/ALGORITHM')}>ALGORITHM</P>
         </Menu>
         <Menu>
-          <P>SKY</P>
+          <P onClick={()=>
+          history.push('/list/SKY')}>SKY</P>
         </Menu>
         <Menu>
-          <P>COMMIT</P>
+          <P onClick={()=>
+          history.push('/list/COMMIT')}>COMMIT</P>
         </Menu>
         <Menu>
-          <P>FOOD</P>
+          <P onClick={()=>
+          history.push('/list/FOOD')}>FOOD</P>
         </Menu>
         <Menu>
-          <P>DIARY</P>
+          <P onClick={()=>
+          history.push('/list/DIARY')}>DIARY</P>
         </Menu>
       </Container>
       <Footer />
