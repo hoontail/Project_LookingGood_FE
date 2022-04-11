@@ -11,7 +11,7 @@ const Postlist = () => {
   return (
     <div className="container">
       {post_list.filter((a)=> {
-        return a.category==="SKY"
+        return a.category==="TEAM"
       }).map((list, index) => {
         return (
           <figure>
