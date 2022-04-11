@@ -18,7 +18,7 @@ function App() {
 
   // React.useEffect(() => {
   //   if (is_session) {
-  //     dispatch(userActions.loginCheckFB());
+  //     dispatch(userActions.loginCheckDB());
   //   }
   // }, []);
 

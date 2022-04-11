@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { setCookie, deleteCookie } from "./Cookie";
+import axios from "axios"
 
 // actions
 const LOG_OUT = "LOG_OUT";
@@ -21,25 +22,51 @@ const initialState = {
 // middleware
 const signupDB = (id, pwd, url) => {
   return function (dispatch, getState, { history }) {
-    dispatch(
-      setUser({
-        userId: id,
-        password: pwd,
-        userImageUrl: url,
-      })
-    );
+    
+// axios 연결하기
+    axios({
+      method: 'post',
+      url: 'https://reqres.in/api/users',
+      data: {
+        userid: "morpheus",
+        password: "leader",
+      }
+    })
+    .then(function(response) {
+      console.log(response)
+      dispatch(
+        setUser({
+          userId: response.data.id,
+          password: pwd,
+          userImageUrl: url,
+        })
+      );
+    })
     history.push("/");
   };
 };
 
 const loginDB = (id, pwd) => {
   return function (dispatch, getState, { history }) {
-    dispatch(
-      setUser({
-        userId: id,
-        password: pwd,
-      })
-    );
+  //axios 연결하기
+    axios({
+      method: 'post',
+      url: 'https://reqres.in/api/login',
+      data: {
+        "email": "eve.holt@reqres.in",
+        "password": "cityslicka"
+      }
+    })
+    .then(function(response) {
+      console.log(response)
+      dispatch(
+        setUser({
+          userId: id,
+          password: pwd,
+        })
+      );
+    })
+
     console.log('로그인했어요!')
     history.push("/");
   };
