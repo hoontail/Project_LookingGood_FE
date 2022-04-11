@@ -3,9 +3,12 @@ import styled from "styled-components";
 import team from "../imagegroup/team.jpg";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const Login = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -25,6 +28,8 @@ const Login = () => {
       window.alert("아이디의 첫번째 자리에는 특수문자가 올 수 없습니다.");
       return;
     }
+
+    dispatch(userActions.loginDB(id, pwd));
   }
 
   return (
@@ -57,7 +62,6 @@ const Login = () => {
 
 
 const Whole = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -79,9 +83,7 @@ const Loginbox = styled.div`
   justify-content: center;
   width: 400px;
   height: 600px;
-  border: 1px solid black;
   border-radius: 10px;
-  margin: 30px;
   box-shadow: 3px 1px 9px #394481;
 `;
 
@@ -96,15 +98,15 @@ const Info = styled.div`
   align-items: center;
   justify-content: center;
   width: 400px;
-  height: 600px;
-  margin: 30px;
+  height: 800px;
 `;
 
 const InputBox = styled.input`
   width: 70%;
   height: 26px;
   margin: 25px;
-  border: 0px;
+  padding: 5px 0px 5px 0px;
+  border: none;
   border-bottom: 1px solid #000;
   background-color: transparent;
   &: hover {
@@ -118,9 +120,10 @@ const InputBox = styled.input`
 
 const Button = styled.button`
   background-color: #fafafa;
-  border: 1px solid black;
+  border: 3px solid transparent;
   border-radius: 8px;
   padding: 10px;
+  box-shadow: 1px 1px 0.5px #394481;
   &:hover {
     border: 3px solid #394481;
   }

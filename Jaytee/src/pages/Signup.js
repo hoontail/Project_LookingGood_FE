@@ -3,37 +3,41 @@ import styled from "styled-components";
 import team from "../imagegroup/team.jpg";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userAction } from "../redux/modules/user";
 
 const Signup = () => {
-  const [id, setId] = useState("");
-  const [url, setUrl] = useState("");
-  const [pwd, setPwd] = useState(""); 
+  const [userid, setId] = useState("");
+  const [userImageUrl, setUrl] = useState("");
+  const [password, setPwd] = useState(""); 
   const [pwdCheck, setPwdCheck] = useState(""); 
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const signup = () => {
-    const idCheck = (id) => {
+  const signup = (props) => {
+    const idCheck = (userid) => {
       let _reg = /^[0-9a-zA-Z]([-_.0-9a-zA-Z])/;
   
-      return _reg.test(id);
+      return _reg.test(userid);
     }
 
-    if (id === "" || pwd === "" || url === "") {
+    if (userid === "" || password === "" || userImageUrl === "") {
       window.alert("아이디, 패스워드, URL을 모두 입력해주세요!");
       return;
     }
 
-    if(!idCheck(id)){
+    if(!idCheck(userid)){
       window.alert('아이디의 첫번째 자리에는 특수문자가 올 수 없습니다.');
       return;
     }
     
-    if (pwd !== pwdCheck) {
+    if (password !== pwdCheck) {
       window.alert("패스워드와 패스워드 확인이 일치하지 않습니다!");
       return;
     }
 
-    console.log(id,pwd)
+    dispatch(userAction.signupDB(userid, password, userImageUrl));
+    console.log(userid,password)
   }
   
 
@@ -99,9 +103,7 @@ const Signbox = styled.div`
   justify-content: center;
   width: 400px;
   height: 600px;
-  border: 1px solid black;
   border-radius: 10px;
-  margin: 30px;
   box-shadow: 3px 1px 9px #394481;
 `;
 
@@ -117,7 +119,7 @@ const Info = styled.div`
   justify-content: center;
   width: 400px;
   height: 600px;
-  margin: 30px;
+  margin: 30px 0px;
 `;
 
 const InputBox = styled.input`
@@ -125,6 +127,7 @@ const InputBox = styled.input`
   height: 26px;
   margin: 25px;
   border: 0px;
+  padding: 5px 0px 5px 0px;
   border-bottom: 1px solid #000;
   background-color: transparent;
   &: hover {
@@ -137,16 +140,15 @@ const InputBox = styled.input`
 `;
 
 const Mybtn = styled.button`
-  box-sizing: border-box;
-  background-color: #fafafa;
-  border: 1px solid black;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 100px;
-  &:hover {
-    box-sizing: border-box;
-    border: 3px solid #394481;
-  }
+background-color: #fafafa;
+border: 3px solid transparent;
+border-radius: 8px;
+padding: 10px;
+box-shadow: 1px 1px 0.5px #394481;
+margin-bottom: 100px;
+&:hover {
+  border: 3px solid #394481;
+}
 `;
 
 export default Signup;
