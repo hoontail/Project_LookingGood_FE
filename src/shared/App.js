@@ -1,21 +1,22 @@
 import React from "react";
-import Main from "../page/Main";
 import Header from "./Header";
-import PostEdit from "../page/PostEdit";
-import Postlist from "../page/Postlist";
-
-import PostWrite from "../page/PostWrite";
+import { Login, Signup, Main, PostWrite, Postlist, DetailPage}from "../page/pages";
 import { BrowserRouter, Route } from "react-router-dom";
+
+
 function App() {
+  
   return (
     <> 
     <Header/>
-      <BrowserRouter>
-        
+      <BrowserRouter>      
         <Route path="/" component={Main} exact/>
         <Route path="/write" component={PostWrite}/>
+        <Route path="/login" component={Login}/>
+        <Route path="/signup" component={Signup}/>
         {/* <Route path="/edit/:id" component={PostEdit} exact/> */}
         <Route path="/list/:category" component={Postlist}/>
+        <Route path="/detail" component={DetailPage}/>
       </BrowserRouter>
   
     </>

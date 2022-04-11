@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LoginBar from "../components/LoginBar";
 import Grid from "../elements/Grid";
-import logo from "../img/logo.png";
+import logo from "../imagegroup/logo.png";
 
 function Header(props) {
   return (

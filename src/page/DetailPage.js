@@ -138,10 +138,10 @@ const Main = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: #fafafa;
-
+  padding-top: 50px;
   /* padding-top: 100px; */
   height: 100%;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 `;
 const Button = styled.button`
   background: transparent;

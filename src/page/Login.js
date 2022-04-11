@@ -109,11 +109,11 @@ const InputBox = styled.input`
   border: none;
   border-bottom: 1px solid #000;
   background-color: transparent;
-  &: hover {
+  &:hover {
     border: 0px;
     border-bottom: 2px solid #394481;
   }
-  &: focus-visible {
+  &:focus-visible {
     outline: none;
   }
 `;

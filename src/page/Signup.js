@@ -130,11 +130,11 @@ const InputBox = styled.input`
   padding: 5px 0px 5px 0px;
   border-bottom: 1px solid #000;
   background-color: transparent;
-  &: hover {
+  &:hover {
     border: 0px;
     border-bottom: 2px solid #394481;
   }
-  &: focus-visible {
+  &:focus-visible {
     outline: none;
   }
 `;
