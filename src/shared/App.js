@@ -4,6 +4,7 @@ import { ConnectedRouter } from "connected-react-router";
 import styled from 'styled-components';
 import Signup from '../pages/Signup';
 import Login from '../pages/Login';
+import DetailPage from "../pages/Detail_page";
 import logo from '../imagegroup/logo.png'
 import { history } from "../redux/configureStore";
 import { useDispatch } from "react-redux";
@@ -30,6 +31,7 @@ function App() {
         <ConnectedRouter history={history}>
           <Route path="/signup" exact component={Signup}/>
           <Route path="/login" exact component={Login}/>
+          <Route path="/detail" exact component={DetailPage}/>
         </ConnectedRouter>
       </Box>
     </Container>
