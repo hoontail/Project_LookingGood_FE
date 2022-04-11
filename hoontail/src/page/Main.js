@@ -50,7 +50,7 @@ const Container = styled.div`
 const Menu = styled.div`
   /* max-width: 430px; */
   width: 500px;
-  //   height: 200px;
+     height: 400px;
   margin: 0px 60px;
   //   /* background-color: blue; */
   display: flex;
@@ -61,7 +61,7 @@ const Menu = styled.div`
 
 const P = styled.p`
   font-size: 100px;
-  margin-bottom: 15px;
+  margin-top: 15px;
   color: white;
   text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
   cursor: pointer;
@@ -72,13 +72,15 @@ const P = styled.p`
   -o-transition: 0.5s;
   -ms-transition: 0.5s;
   transition: 0.5s;
+ 
+
   &:hover {
     color: rgb(0, 0, 0);
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
+    -webkit-transform: scale(1.6, 1.6);
+    -moz-transform: scale(1.6, 1.6);
+    -o-transform: scale(1.6, 1.6);
+    -ms-transform: scale(1.6, 1.6);
+    transform: scale(1.6, 1.6);
   }
 `;
 

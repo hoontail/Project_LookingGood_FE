@@ -36,6 +36,7 @@ const Nav = styled.div`
   height: 100px;
   max-height: 10vh;
   background-color: #fafafa;
+  z-index: 2; //우선순위 
 `;
 
 const Btns = styled.div`
