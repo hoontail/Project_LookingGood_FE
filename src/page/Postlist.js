@@ -3,17 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Mason from "./Mason.css";
-import { actionCreators as postActions } from "../redux/modules/post";
+import post, { actionCreators as postActions } from "../redux/modules/post";
 
 const Postlist = (props) => {
   const params = useParams();
-  const dispatch = useDispatch()
-  const post_list = useSelector(state => state.post.list)
-  const history = useHistory()
+  const dispatch = useDispatch();
+  const post_list = useSelector((state) => state.post.list.list);
+  const history = useHistory();
 
-  React.useEffect(() => {
-    dispatch(postActions.getPostDB());
-  }, []);
+  // console.log(post_list);
+
+  // React.useEffect(() => {
+
+  //     dispatch(postActions.getPostDB());
+
+  // }, []);   여기서 dispatch를 해주면 데이터 로딩이 느려서 메인으로 옮김... 3시간고생
+
   return (
     <>
       <div className="container">
@@ -21,18 +26,11 @@ const Postlist = (props) => {
           .filter((a) => {
             return a.category == params.category;
           })
-          .map((list, index) => {
+          .map((p, idx) => {
             return (
-              <>
-                <figure>
-                  <img
-                    src={list.imgUrl}
-                    onClick={() => {
-                      history.push("/detail");
-                    }}
-                  />
-                </figure>
-              </>
+              <figure>
+                <img src={p.imageUrl} />
+              </figure>
             );
           })}
       </div>
@@ -40,25 +38,23 @@ const Postlist = (props) => {
   );
 };
 
-//     <div className="container">
-//       {post_list.filter((a)=> {
-//         // return a.category== params.category
-//       }).
-//       {post_list.map((list, index) => {
-//         return (      
-         
-//           <>{list.title}</>
-//         //  <figure>
-//         // <img src={list.imgUrl} onClick={()=>{
-//         //   history.push('/detail/'+params.category+index)
-//         // }} />
-//         //   </figure>
-
-//         );
-//       })}
-//     </div>
-//  </>
-//   );
-// };
-
 export default Postlist;
+
+//  {/* {post_list.list
+//       .filter((a, idx) => {
+//         return console.log(a)
+//       })
+//       .map((list, index) => {
+//         return (
+//           <>
+//             <figure>
+//               <img
+//                 src={list.imgUrl}
+//                 onClick={() => {
+//                   history.push("/detail");
+//                 }}
+//               />
+//             </figure>
+//           </>
+//         );
+//       })} */}

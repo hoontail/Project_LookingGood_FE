@@ -25,7 +25,7 @@ const addPostDB = (formData) => {
     try {
       await axios({
         method: "post",
-        url: "http://13.124.238.92/write_modify/user/postadd",
+        url: "http://15.164.163.116/api/post",
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -52,9 +52,10 @@ const getPostDB = () => {
 
    
     await axios
-      .get("https://6251cd8b7f7fa1b1dddf39b0.mockapi.io/post")
+      .get("http://15.164.163.116/api/post")
       .then((response) => {
         dispatch(setPost(response.data))
+  
    
       })
       .catch((error) => {

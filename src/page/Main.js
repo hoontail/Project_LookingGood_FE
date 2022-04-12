@@ -1,12 +1,19 @@
 import React from "react";
 import { useHistory, } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Footer from "../shared/Footer";
-
+import { actionCreators as postActions } from "../redux/modules/post";
 function Main(props) {
  const history = useHistory()
 
+ const dispatch = useDispatch()
+ 
+ React.useEffect(() => {
+
+  dispatch(postActions.getPostDB());
+
+}, []);
   return (
     <>
       <Container>
@@ -67,6 +74,7 @@ const Menu = styled.div`
   flex-direction: column;
   //   justify-content: center;
   align-items: center;
+ 
 `;
 
 const P = styled.p`
@@ -93,6 +101,7 @@ const P = styled.p`
     transform: scale(1.6, 1.6);
   }
 `;
+
 
 // a{
 //     display: inline-block;
