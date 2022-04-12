@@ -108,6 +108,7 @@ const loginCheckDB = () => {
 
 const logoutDB = () => {
   return function (dispatch, getState, {history}) {
+      sessionStorage.clear();
       dispatch(logOut());
       history.replace('/');
     }

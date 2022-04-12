@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "../elements/Image";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 function LoginBar2(props) {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.User.user);
   console.log(user)
 
@@ -12,7 +14,10 @@ function LoginBar2(props) {
       <BtnGroup>
        <Image shape= "circle" src={user.userImageUrl}></Image>
         <Btn>{user.userId}</Btn>
-        <Btn>로그아웃</Btn>
+        <Btn
+        onClick={() => {
+          dispatch(userActions.logoutDB());
+        }}>로그아웃</Btn>
       </BtnGroup>
     </>
   );
