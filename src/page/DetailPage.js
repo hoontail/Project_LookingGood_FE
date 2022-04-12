@@ -12,24 +12,6 @@ import {
 } from "../redux/modules/comment";
 import { now } from "moment";
 
-// comments =[{
-//   "id":"0"
-//   "name": "sungyoung lee"
-//   "cfomment": "good"
-//  fff "time": "2022-04-10 14:44:44"
-// },
-// {
-//   "id":"0"
-//   "name": "sungyoung lee"
-//   "comment": "good"
-//   "time": "2022-04-10 14:44:44"
-// },
-// {
-//   "id":"0"
-//   "name": "sungyoung lee"
-//   "comment": "good"
-//   "time": "2022-04-10 14:44:44"
-// }]
 
 const DetailPage = (props) => {
   const history = useHistory();
