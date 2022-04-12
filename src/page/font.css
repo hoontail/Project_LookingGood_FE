@@ -1,9 +1,0 @@
-.gradient {
-  font-weight: 600;
-  font-family: Tium;
-  letter-spacing: -2px;
-  font-size: 100px;
-  background-color: linear-gradient(to right, #ff5f5c, #2eadfd);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
