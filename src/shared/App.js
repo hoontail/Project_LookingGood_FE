@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Header";
-import { Login, Signup, Main, PostWrite, Postlist, DetailPage}from "../page/pages";
+import { Login, Signup, Main, PostWrite, Postlist, DetailPage} from "../page/pages";
 import { BrowserRouter, Route } from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {actionCreators as userActions} from "../redux/modules/user"
@@ -25,6 +25,7 @@ function App() {
     <Header/>
       <ConnectedRouter history={history}>
         <Route path="/" component={Main} exact/>
+        <Route  component={Header}/>
         <Route path="/write" component={PostWrite}/>
         <Route path="/login" component={Login}/>
         <Route path="/signup" component={Signup}/>
