@@ -7,9 +7,9 @@ import { actionCreators as postActions } from "../redux/modules/post";
 
 const Postlist = (props) => {
   const params = useParams();
-  const dispatch = useDispatch();
-  const post_list = useSelector((state) => state.post.list);
-  const history = useHistory();
+  const dispatch = useDispatch()
+  const post_list = useSelector(state => state.post.list)
+  const history = useHistory()
 
   React.useEffect(() => {
     dispatch(postActions.getPostDB());
@@ -45,8 +45,8 @@ const Postlist = (props) => {
 //         // return a.category== params.category
 //       }).
 //       {post_list.map((list, index) => {
-//         return (
-
+//         return (      
+         
 //           <>{list.title}</>
 //         //  <figure>
 //         // <img src={list.imgUrl} onClick={()=>{

@@ -37,6 +37,7 @@ const BtnGroup = styled.div`
 
 const Btn = styled.button`
   margin-right: 50px;
+  margin-left: -30px;
   width: 90px;
   height: 50px;
   flex-direction: row;
