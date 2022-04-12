@@ -38,17 +38,17 @@ const DetailPage = (props) => {
   const [comment, setComment] = useState("");
   console.log(comments, comment);
   // on Render, "componentDidMount"
-  useEffect(() => {
-    // Get Comments.
-    axios
-      .get("./comment.js")
-      .then((response) => {
-        setComments(response.comments);
-      })
-      .catch((error) => {
-        console.log("this the error:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   // Get Comments.
+  //   axios
+  //     .get("./comment.js")
+  //     .then((response) => {
+  //       setComments(response.comments);
+  //     })
+  //     .catch((error) => {
+  //       console.log("this the error:", error);
+  //     });
+  // }, []);
 
   const postComment = () => {
     setComments([
@@ -60,12 +60,12 @@ const DetailPage = (props) => {
       },
     ]);
 
-    axios.post("url", {
-      id: "1",
-      name: "sean",
-      comment: comment,
-      time: "12:00",
-    });
+    // axios.post("url", {
+    //   id: "1",
+    //   name: "sean",
+    //   comment: comment,
+    //   time: "12:00",
+    // });
   };
 
   return (
