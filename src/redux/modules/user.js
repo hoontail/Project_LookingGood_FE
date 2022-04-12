@@ -60,7 +60,7 @@ const loginDB = (id, pwd) => {
     })
     .then(function(response) {
       console.log(response)
-      localStorage.setItem("token", response.data.token);
+      sessionStorage.setItem("token", response.data.token);
       dispatch(
         setUser({
           userId: id,
@@ -68,24 +68,41 @@ const loginDB = (id, pwd) => {
         })
       );
     })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+
+      console.log(errorCode, errorMessage);
+    });
 
     console.log('로그인했어요!')
     history.push("/");
   };
 };
 
-const loginCheckDB = (user) => {
+const loginCheckDB = () => {
+  const token = sessionStorage.getItem("token");
   return function (dispatch, getState, {history}){
+    axios({
+      method: 'get',
+      url: 'http://3.35.174.45/api/users/me',
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    })
+    .then(function(user){
       if(user){
+        console.log("여기 들어왔어!", user)
         dispatch(
           setUser({
-            userId: user.id,
-            userImageUrl: user.url,
+            userId: user.data.userId,
+            userImageUrl: user.data.userImageUrl,
           })
         );
       }else{
         dispatch(logOut());
-      }
+    }
+    })
   }
 }
 

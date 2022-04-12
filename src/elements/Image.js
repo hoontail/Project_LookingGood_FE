@@ -14,8 +14,8 @@ function Image(props) {
   }
   if (shape === "rectangle") {
     return <AspectOutter>
-        <AspectInner{...styles}></AspectInner>
-    </AspectOutter>;
+        <AspectInner {...styles}></AspectInner>
+           </AspectOutter>;
   }
   return <>
   <ImageDefault {...styles}></ImageDefault></>;

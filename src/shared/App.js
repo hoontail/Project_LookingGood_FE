@@ -4,13 +4,15 @@ import { Login, Signup, Main, PostWrite, Postlist, DetailPage}from "../page/page
 import { BrowserRouter, Route } from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {actionCreators as userActions} from "../redux/modules/user"
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "../redux/configstore";
 
 
 function App() {
   
   const dispatch = useDispatch();
 
-  const is_session = localStorage.getItem("token") ? true : false;
+  const is_session = sessionStorage.getItem("token") ? true : false;
 
   React.useEffect(() => {
     if (is_session) {
@@ -21,7 +23,7 @@ function App() {
   return (
     <> 
     <Header/>
-      <BrowserRouter>      
+      <ConnectedRouter history={history}>
         <Route path="/" component={Main} exact/>
         <Route path="/write" component={PostWrite}/>
         <Route path="/login" component={Login}/>
@@ -29,7 +31,7 @@ function App() {
         {/* <Route path="/edit/:id" component={PostEdit} exact/> */}
         <Route path="/list/:category" component={Postlist}/>
         <Route path="/detail" component={DetailPage}/>
-      </BrowserRouter>
+      </ConnectedRouter>
   
     </>
   );

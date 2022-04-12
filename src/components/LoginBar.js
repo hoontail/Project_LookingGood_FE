@@ -1,15 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import Image from "../elements/Image";
+import { history } from "../redux/configstore";
+
 function LoginBar(props) {
   return (
     <>
       <BtnGroup>
-        {/* <Btn>로그인</Btn> */}
-        {/* <Btn>회원가입</Btn> */}
-       <Image shape= "circle"></Image>
-        <Btn>LeeTaeHoon</Btn>
-        <Btn>로그아웃</Btn>
+        <Btn
+          onClick={() => {
+            history.push("/login");
+          }}
+        >
+          로그인
+        </Btn>
+        <Btn
+          onClick={() => {
+            history.push("/signup");
+          }}
+        >
+          회원가입
+        </Btn>
       </BtnGroup>
     </>
   );
@@ -24,8 +34,8 @@ const BtnGroup = styled.div`
 `;
 
 const Btn = styled.button`
-  margin-right : 50px;
-  width : 90px;
+  margin-right: 50px;
+  width: 90px;
   height: 50px;
   flex-direction: row;
   border-radius: 20px;
@@ -33,10 +43,9 @@ const Btn = styled.button`
   background-color: #fafafa;
   font-size: 16px;
   cursor: pointer;
-  &:hover{  
-    background-color : #394481;
+  &:hover {
+    background-color: #394481;
     /* #FF385C; */
-    color : white;
+    color: white;
   }
 `;
-
