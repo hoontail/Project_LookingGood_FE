@@ -4,6 +4,7 @@ import Image from "../elements/Image";
 function LoginBar(props) {
   return (
     <>
+    
       <BtnGroup>
         {/* <Btn>로그인</Btn> */}
         {/* <Btn>회원가입</Btn> */}
@@ -21,6 +22,7 @@ const BtnGroup = styled.div`
   display: flex;
   /* float: right; */
   margin-left: 8px;
+  background-color: #fafafa;
 `;
 
 const Btn = styled.button`
@@ -32,6 +34,7 @@ const Btn = styled.button`
   border: none;
   background-color: #fafafa;
   font-size: 16px;
+  
   cursor: pointer;
   &:hover{  
     background-color : #394481;
