@@ -1,53 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
+import { getCookie } from "../redux/modules/Cookie";
 import {
-  _addComment,
-  _getComments,
-  _editComment,
-  _deleteComment,
+  addCommentDB,
+  getCommentsDB,
+  editCommentDB,
+  deleteCommentDB,
 } from "../redux/modules/comment";
 import { now } from "moment";
 
-
 const DetailPage = (props) => {
   const history = useHistory();
-  
-  const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState("");
-  console.log(comments, comment);
-  // on Render, "componentDidMount"
-  useEffect(() => {
-    // Get Comments.
-    axios
-      .get("./comment.js")
-      .then((response) => {
-        setComments(response.comments);
-      })
-      .catch((error) => {
-        console.log("this the error:", error);
-      });
-  }, []);
+  const dispatch = useDispatch();
+  const token = sessionStorage.getItem("token");
+  const postId = useSelector((state) => state.post);
+
+  const list = [1, 2, 3];
+
+  const [comment, setComment] = useState();
+
+  console.log(postId, token);
+  const onChange = (e) => {
+    setComment(e.target.value);
+  };
 
   const postComment = () => {
-    setComments([
-      ...comments,
-      {
-        name: "sean",
-        comment: comment,
-        time: "12:00",
-      },
-    ]);
-
-    axios.post("url", {
-      id: "1",
-      name: "sean",
-      comment: comment,
-      time: "12:00",
-    });
+    dispatch(addCommentDB(postId, token, comment));
+    setComment("");
   };
 
   return (
@@ -69,7 +51,7 @@ const DetailPage = (props) => {
 
           {/* Option 1 */}
           <Box1>
-            {comments.map((comment) => (
+            {list.map((comment) => (
               <SmallBox>
                 <ImageCircle />
                 <Text>{comment.name}</Text>
@@ -83,7 +65,7 @@ const DetailPage = (props) => {
             <Input
               placeholder="Leave a comment here"
               value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              onChange={onChange}
             />
 
             <Button

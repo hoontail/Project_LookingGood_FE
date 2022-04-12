@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
-import { apis } from '../../apis';
+import axios from 'axios';
+
 
 // action
 const ADD = 'comment/ADD';
@@ -22,39 +23,37 @@ const initialState = {
 	comments: [],
 };
 
-// Thunk function
-export const _editComment =
-	(id, coId, newContent, setEditMode) => async (dispatch) => {
-		const { data } = await apis.editComment(id, coId, newContent);
-		dispatch(editComment(coId, data));
-		setEditMode(false);
-	};
+//middleware
 
-export const _delComment = (id, coId) => (dispatch) => {
-	try {
-		apis.delComment(id, coId);
-		dispatch(delComment(coId));
-	} catch (e) {}
-};
-export const _addComment =
-	(id, content) =>
-	async (dispatch, getState, { history }) => {
-		try {
-			const { data } = await apis.addComment(id, content);
-			dispatch(addComment(data));
-		} catch (e) {}
-	};
+export const addCommentDB = (postId, token, comment) => {
 
-export const _getComments =
-	(id) =>
-	async (dispatch, getState, { history }) => {
-		try {
-			const { data } = await apis.comments(id);
-			dispatch(getComments(data));
-		} catch (e) {
-			// console.log(`코멘트 불러오기 실패! ${e}`);
-		}
-	};
+		return function (dispatch, getState) {
+		axios({
+      method: 'post',
+      url: `http://3.35.174.45/api/comments/${postId}`, 
+      data: {
+					postId: postId,
+					comment: comment
+      },
+					headers: {
+						Authorization : `Bearer${token}`
+					}
+    })
+    .then(function(response) {
+      console.log(response)
+    //   dispatch(
+    //     setUser({
+    //       userId: response.data.id,
+    //       password: pwd,
+    //       userImageUrl: url,
+    //     })
+    //   );
+	})
+}
+
+}
+
+
 
 // reducer
 export default handleActions(
@@ -98,3 +97,11 @@ export default handleActions(
 	},
 	initialState,
 );
+
+const actionCreators = {
+  addCommentDB,
+
+
+};
+
+export { actionCreators };
