@@ -1,17 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Mason from "./Mason.css";
 
-const Postlist = ({_handleModal}) => {
+const Postlist = (props) => {
   const params = useParams();
   const dispatch = useDispatch
   const post_list = useSelector(state => state.post)
-  
+  const history = useHistory()
 
-  console.log(params.category)
- 
- 
   return (
 
     <>
@@ -24,7 +22,9 @@ const Postlist = ({_handleModal}) => {
          
           
          <figure>
-        <img src={list.imgUrl}  />
+        <img src={list.imgUrl} onClick={()=>{
+          history.push('/detail/'+params.category+index)
+        }} />
           </figure>
           
         );

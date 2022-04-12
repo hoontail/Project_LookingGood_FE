@@ -9,6 +9,7 @@ import { actionCreators as imageActions } from "../redux/modules/image";
 function PostWrite(props) {
   const dispatch = useDispatch();
   const preview = useSelector((state) => state.image.preview);
+
   const fileInput = React.useRef(null);
 
   const [post, setPost] = React.useState({
@@ -16,6 +17,7 @@ function PostWrite(props) {
     category: "SKY",
     content: "",
   });
+  console.log(post)
 
   const selectFile = (e) => {
     // console.log(e.target.files);
@@ -40,7 +42,7 @@ function PostWrite(props) {
   
   const formData = new FormData()
  if(fileInput.current){   
-    formData.append('imageUrl', fileInput.current.files[0] )
+    formData.append('image', fileInput.current.files[0] )
     formData.append('title', post.title)
     formData.append('category', post.category)
     formData.append('content', post.content)

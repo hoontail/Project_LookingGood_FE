@@ -92,7 +92,7 @@ const loginCheckDB = () => {
     })
     .then(function(user){
       if(user){
-        console.log("여기 들어왔어!", user)
+
         dispatch(
           setUser({
             userId: user.data.userId,
