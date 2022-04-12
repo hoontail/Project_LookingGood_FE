@@ -2,10 +2,22 @@ import React from "react";
 import Header from "./Header";
 import { Login, Signup, Main, PostWrite, Postlist, DetailPage}from "../page/pages";
 import { BrowserRouter, Route } from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {actionCreators as userActions} from "../redux/modules/user"
 
 
 function App() {
   
+  const dispatch = useDispatch();
+
+  const is_session = localStorage.getItem("token") ? true : false;
+
+  React.useEffect(() => {
+    if (is_session) {
+      dispatch(userActions.loginCheckDB());
+    }
+  }, []);
+
   return (
     <> 
     <Header/>

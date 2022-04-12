@@ -50,6 +50,7 @@ const Login = () => {
         </Info>
         <Button onClick={() => {
           login();
+          history.push('/')
         }}>로그인하기</Button>
         <Question>회원이 아니신가요? <span onClick={() => {
           history.push('/signup')

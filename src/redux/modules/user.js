@@ -20,16 +20,17 @@ const initialState = {
 };
 
 // middleware
-const signupDB = (id, pwd, url) => {
+const signupDB = (id, pwd, pwdCheck, url, ) => {
   return function (dispatch, getState, { history }) {
-    
 // axios 연결하기
     axios({
       method: 'post',
-      url: 'https://reqres.in/api/users',
+      url: 'http://3.35.174.45/api/signup',
       data: {
-        userid: "morpheus",
-        password: "leader",
+        userId: id,
+        password: pwd,
+        userImageUrl: url,
+        confirmPassword: pwdCheck,
       }
     })
     .then(function(response) {
@@ -51,14 +52,15 @@ const loginDB = (id, pwd) => {
   //axios 연결하기
     axios({
       method: 'post',
-      url: 'https://reqres.in/api/login',
+      url: 'http://3.35.174.45/api/login',
       data: {
-        "email": "eve.holt@reqres.in",
-        "password": "cityslicka"
+        userId: id,
+        password : pwd,
       }
     })
     .then(function(response) {
       console.log(response)
+      localStorage.setItem("token", response.data.token);
       dispatch(
         setUser({
           userId: id,

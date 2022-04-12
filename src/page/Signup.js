@@ -36,7 +36,7 @@ const Signup = () => {
       return;
     }
 
-    dispatch(userAction.signupDB(userid, password, userImageUrl));
+    dispatch(userAction.signupDB(userid, password, pwdCheck, userImageUrl));
     console.log(userid,password)
   }
   
