@@ -21,11 +21,11 @@ const initialState = {
 
 // middleware
 const signupDB = (id, pwd, pwdCheck, url, ) => {
-  return function (dispatch, getState, { history }) {
+  return async function (dispatch, getState, { history }) {
 // axios 연결하기
-    axios({
+    await axios({
       method: 'post',
-      url: 'http://3.35.174.45/api/signup',
+      url: 'http://13.124.238.92/api/signup',
       data: {
         userId: id,
         password: pwd,
@@ -43,7 +43,6 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
         })
       );
     })
-    history.push("/");
   };
 };
 
@@ -52,19 +51,18 @@ const loginDB = (id, pwd) => {
   //axios 연결하기
     axios({
       method: 'post',
-      url: 'http://3.35.174.45/api/login',
+      url: 'http://13.124.238.92/api/login',
       data: {
         userId: id,
         password : pwd,
       }
     })
     .then(function(response) {
-      console.log(response)
       sessionStorage.setItem("token", response.data.token);
+      console.log(response)
       dispatch(
-        setUser({
+        getUser({
           userId: id,
-          password: pwd,
         })
       );
     })
@@ -75,7 +73,6 @@ const loginDB = (id, pwd) => {
       console.log(errorCode, errorMessage);
     });
 
-    console.log('로그인했어요!')
     history.push("/");
   };
 };
@@ -85,16 +82,15 @@ const loginCheckDB = () => {
   return function (dispatch, getState, {history}){
     axios({
       method: 'get',
-      url: 'http://3.35.174.45/api/users/me',
+      url: 'http://13.124.238.92/api/checkLogin',
       headers: {
         authorization: `Bearer ${token}`
       }
     })
     .then(function(user){
       if(user){
-        console.log("여기 들어왔어!", user)
         dispatch(
-          setUser({
+          getUser({
             userId: user.data.userId,
             userImageUrl: user.data.userImageUrl,
           })
@@ -119,9 +115,7 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        setCookie("is_login", "success");
         draft.user = action.payload.user;
-        draft.is_login = true;
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
@@ -129,7 +123,12 @@ export default handleActions(
         draft.user = null;
         draft.is_login = false;
       }),
-    [GET_USER]: (state, action) => produce(state, (draft) => {}),
+    [GET_USER]: (state, action) =>
+      produce(state, (draft) => {
+        setCookie("is_login", "success");
+        draft.user = action.payload.user;
+        draft.is_login = true;
+      }),
   },
   initialState
 );

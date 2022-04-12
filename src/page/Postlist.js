@@ -5,11 +5,8 @@ import Mason from "./Mason.css";
 
 const Postlist = ({_handleModal}) => {
   const params = useParams();
-  const dispatch = useDispatch
+  const dispatch = useDispatch();
   const post_list = useSelector(state => state.post)
-  
-
-  console.log(params.category)
  
  
   return (
@@ -18,7 +15,7 @@ const Postlist = ({_handleModal}) => {
     
     <div className="container">
       {post_list.filter((a)=> {
-        return a.category== params.category
+        return a.category == params.category
       }).map((list, index) => {
         return (      
          
