@@ -42,7 +42,7 @@ function PostWrite(props) {
   
   const formData = new FormData()
  if(fileInput.current){   
-    formData.append('image', fileInput.current.files[0] )
+    formData.append('imageUrl', fileInput.current.files[0] )
     formData.append('title', post.title)
     formData.append('category', post.category)
     formData.append('content', post.content)
@@ -50,9 +50,9 @@ function PostWrite(props) {
     
 
   //  폼데이터 콘솔 찍기
-//   for (var pair of formData.entries()) {
-//     console.log(pair[0]+ ', ' + pair[1]);
-// }
+  for (var pair of formData.entries()) {
+    console.log(pair[0]+ ', ' + pair[1]);
+}
   const addPostDB = () => {
     if (post.title === "" || post.content === "") {
       window.alert("내용을 추가 해 주세요");
