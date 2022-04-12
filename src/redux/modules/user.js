@@ -89,10 +89,6 @@ const loginCheckDB = () => {
     })
     .then(function(user){
       if(user){
-<<<<<<< HEAD
-=======
-
->>>>>>> 866a999053525d4a1ea9d4358aff01e7a6508725
         dispatch(
           getUser({
             userId: user.data.userId,
