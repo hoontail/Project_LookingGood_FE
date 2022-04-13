@@ -6,14 +6,16 @@ import axios from "axios";
 import { getCookie } from "../redux/modules/Cookie";
 import { now } from "moment";
 import { actionCreators as commentsActions } from "../redux/modules/comment";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 const DetailPage = (props) => {
   const history = useHistory();
   const params = useParams();
   const post_list = useSelector((state) => state.post.list);
-  const user_info = useSelector((state) => state.User);
+  const user_info = useSelector((state) => state.User.user);
   const comments_list = useSelector((state) => state.comment.comments);
-  console.log(comments_list);
+
+  
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
 
@@ -38,6 +40,14 @@ const DetailPage = (props) => {
     setComment(e.target.value);
   };
 
+  const deletePost = () => {
+    dispatch(postActions.deletePostDB(post._id))
+  
+  }
+
+
+
+
   return (
     <Main>
       <BigBox>
@@ -46,6 +56,10 @@ const DetailPage = (props) => {
           <NameTag>
             <ImageCircle src={user_info.userImageUrl} />
             <Text>{user_info.userId}</Text>
+            <BtnGroup>
+            <EDBtn>수정하기</EDBtn>
+            <EDBtn onClick = {deletePost}>삭제하기</EDBtn>
+          </BtnGroup>
           </NameTag>
           <PosterBox>
             <Text>
@@ -211,4 +225,13 @@ const Text1 = styled.div`
   justify-content: right;
 `;
 
+const EDBtn = styled.button`
+padding : 5px;
+margin-left: 10px;
+
+`
+const BtnGroup = styled.div`
+padding: 16px;
+margin-left: 65px;
+`
 export default DetailPage;
