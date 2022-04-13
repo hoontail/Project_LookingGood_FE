@@ -7,11 +7,13 @@ import { actionCreators as imageActions } from "./image";
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const GET_POST = "GET_POST";
+// const DEL_POST = "DEL_POST"
 
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const getPost = createAction(GET_POST, (post) => ({ post }));
-
+// const deletePost = createAction(DEL_POST, (post) => ({ post }));
+const token = sessionStorage.getItem("token");
 const initialState = {
  list :[
   
@@ -21,7 +23,7 @@ const initialState = {
 
 
 const addPostDB = (formData) => {
-  const token = sessionStorage.getItem("token");
+  
   return async function (dispatch, getState) {
     // for (var pair of formData.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
@@ -60,7 +62,7 @@ const getPostDB = () => {
       .get("http://15.164.163.116/api/post")
       .then((response) => {
         dispatch(setPost(response.data.list))
-  console.log(response);
+  
    
       })
       .catch((error) => {
@@ -69,6 +71,25 @@ const getPostDB = () => {
       
   };
 };
+
+
+const deletePostDB =(postId) => {
+  return async function (dispatch, getState){
+    await axios({
+      method: "DELETE",
+      url: `http://15.164.163.116/api/post/delete/${postId}`,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: `Bearer ${token}`,          
+      },
+    });
+
+  }
+
+}
+
+
+
 
 
 const getOnePostDB = () =>{
@@ -96,6 +117,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
       }),
+    // [DEL_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.list = action.payload.post;
+    //   }),
   },
   initialState
 );
@@ -105,6 +130,7 @@ const actionCreators = {
   addPost,
   addPostDB,
   getPostDB,
+  deletePostDB,
 };
 
 export { actionCreators };
