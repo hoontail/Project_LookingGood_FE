@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-  const { text, _onClick, is_float, children, margin, width, padding, write } = props;
+  const { text, _onClick, is_float, children, margin, width, padding, create } = props;
   if (is_float) {
     return (
       <>
@@ -11,7 +11,7 @@ const Button = (props) => {
     );
   }
 
-  if (write) {
+  if (create) {
     return (
       <>
         <WriteButton onClick={_onClick}>{text}</WriteButton>
