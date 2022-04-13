@@ -8,16 +8,17 @@ import post, { actionCreators as postActions } from "../redux/modules/post";
 const Postlist = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
-  const post_list = useSelector((state) => state.post.list.list);
+  const post_list = useSelector((state) => state.post.list);
   const history = useHistory();
+  console.log(post_list)
 
-  // console.log(post_list);
 
-  // React.useEffect(() => {
+  React.useEffect(() => {
 
-  //     dispatch(postActions.getPostDB());
+      dispatch(postActions.getPostDB());
 
-  // }, []);   여기서 dispatch를 해주면 데이터 로딩이 느려서 메인으로 옮김... 3시간고생
+  }, []);   
+  // 여기서 dispatch를 해주면 데이터 로딩이 느려서 메인으로 옮김... 3시간고생
 
   return (
     <>
@@ -28,7 +29,7 @@ const Postlist = (props) => {
           })
           .map((p, idx) => {
             return (
-              <figure>
+              <figure key={p._id}>
                 <img src={p.imageUrl} />
               </figure>
             );

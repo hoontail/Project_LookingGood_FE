@@ -9,11 +9,11 @@ function Main(props) {
 
  const dispatch = useDispatch()
  
- React.useEffect(() => {
+//  React.useEffect(() => {
 
-  dispatch(postActions.getPostDB());
+//   dispatch(postActions.getPostDB());
 
-}, []);
+// }, []);
   return (
     <>
       <Container>
