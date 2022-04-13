@@ -1,45 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
+import { getCookie } from "../redux/modules/Cookie";
 import {
-  _addComment,
-  _getComments,
-  _editComment,
-  _deleteComment,
+  addCommentDB,
+  getCommentsDB,
+  editCommentDB,
+  deleteCommentDB,
 } from "../redux/modules/comment";
 import { now } from "moment";
-import { useParams } from "react-router-dom";
-
 
 const DetailPage = (props) => {
   const history = useHistory();
-  const params = useParams()
+  const params = useParams();
   const post_list = useSelector((state) => state.post.list);
-  const user_info = useSelector((state) => state.User)
-  
-console.log(user_info)
-  
- const post = post_list.find(p => p._id === params.postid)
- console.log(post)
-  
- 
- const [comments, setComments] = useState([]);
+  const user_info = useSelector((state) => state.User);
+  const dispatch = useDispatch();
+  const token = sessionStorage.getItem("token");
+  console.log(user_info);
+
+  const post = post_list.find((p) => p._id === params.postid);
+  console.log(post._id);
+
+  const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
   const postComment = () => {
-    setComments([
-      ...comments,
-      {
-        name: "sean",
-        comment: comment,
-        time: "12:00",
-      },
-    ]);
+    dispatch(addCommentDB(token, comment, post._id));
+    setComment("");
 
-
+    // Dispatch Post Comment Action.
+    // dispatch(POST_COMMENT)
+  };
+  const onChange = (e) => {
+    setComment(e.target.value);
   };
 
   return (
@@ -48,13 +44,14 @@ console.log(user_info)
         <ImageRect src={post.imageUrl} />
         <Box>
           <NameTag>
-            <ImageCircle src={user_info.userImageUrl}/>
+            <ImageCircle src={user_info.userImageUrl} />
             <Text>{user_info.userId}</Text>
           </NameTag>
           <PosterBox>
             <Text>
-            <h3>{post.title}</h3> 
-             <p/>{post.content}
+              <h3>{post.title}</h3>
+              <p />
+              {post.content}
             </Text>
           </PosterBox>
 
@@ -62,7 +59,7 @@ console.log(user_info)
           <Box1>
             {comments.map((comment) => (
               <SmallBox>
-                <ImageCircle src={user_info.userImageUrl}/>
+                <ImageCircle src={user_info.userImageUrl} />
                 <Text>{comment.name}</Text>
                 <Text> {comment.comment}</Text>
                 <Text1> {new Date().toUTCString()}</Text1>
@@ -74,7 +71,7 @@ console.log(user_info)
             <Input
               placeholder="Leave a comment here"
               value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              onChange={onChange}
             />
 
             <Button
@@ -126,7 +123,7 @@ const Button = styled.button`
   border-radius: 50px;
   font-size: medium;
   cursor: pointer;
-  &:hover{
+  &:hover {
     border: 3px solid #394481;
   }
 `;
@@ -167,6 +164,10 @@ const Box1 = styled.div`
   justify-content: center;
   /* border: 3px solid green; */
   height: 300px;
+  overflow: auto;
+  width: 350px;
+  height: 300px;
+  
 `;
 
 const ImageRect = styled.div`
@@ -177,7 +178,7 @@ const ImageRect = styled.div`
   /* position: relative; */
   /* padding-top: 75%; */
   /* overflow: hidden; */
-  background-image: url(${props =>(props.src)});
+  background-image: url(${(props) => props.src});
   background-size: cover;
 `;
 
@@ -185,7 +186,7 @@ const ImageCircle = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50px;
-  background-image: url(${props =>(props.src)});
+  background-image: url(${(props) => props.src});
   background-size: cover;
   margin: 3px;
 `;

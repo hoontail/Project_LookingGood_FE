@@ -15,7 +15,7 @@ const Postlist = (props) => {
   React.useEffect(() => {
 
       dispatch(postActions.getPostDB());
-
+console.log("asdfasdf");
   }, []);   
   // 여기서 dispatch를 해주면 데이터 로딩이 느려서 메인으로 옮김... 3시간고생
 
