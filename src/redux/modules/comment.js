@@ -49,18 +49,16 @@ export const getCommentsDB = (commentIds) => async (dispatch, getState) => {
 };
 
 export const addCommentDB = (token, comment, postId) => {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
     console.log(token, comment, postId);
-    axios
-      .post({
-        url: `http://15.164.163.116/api/comments/save/${postId}`,
-        data: {
+    await axios
+      .post(
+        `http://15.164.163.116/api/comments/save/${postId}`,
+        {
           content: comment,
         },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
       .then(function (response) {
         console.log(response);
       })
