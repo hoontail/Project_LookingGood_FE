@@ -12,23 +12,28 @@ const DetailPage = (props) => {
   const history = useHistory();
   const params = useParams();
   const post_list = useSelector((state) => state.post.list);
-
   const user_info = useSelector((state) => state.User);
   const comments_list = useSelector((state) => state.comment.comments);
 
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
-
-  const post = post_list.find((p) => p._id === params.postid);
+  let post = post_list.find((p) => p._id === params.postid);
   
+
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
   useEffect(() => {
     dispatch(commentsActions.getCommentsDB(post._id));
-    dispatch(postActions.getOnePostDB(post._id))
+    // localStorage.post = JSON.stringify(post)
+    
   }, []);
+
+
+    
+
+
 
   const postComment = () => {
     

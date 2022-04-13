@@ -8,6 +8,7 @@ import { actionCreators as imageActions } from "../redux/modules/image";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configstore";
 import Button from "../elements/Button"
+import { Redirect } from "react-router-dom";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/edit/:postid" component={PostEdit} exact/>
         <Route path="/list/:category" component={Postlist}/>
         <Route path="/detail/:postid" component={DetailPage}/>
+
         {is_session? <Button create text="+" _onClick={write}></Button> : null}
       </ConnectedRouter>
   

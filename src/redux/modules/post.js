@@ -7,12 +7,12 @@ import { actionCreators as imageActions } from "./image";
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const GET_POST = "GET_POST";
-// const DEL_POST = "DEL_POST"
+
 
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const getPost = createAction(GET_POST, (post) => ({ post }));
-// const deletePost = createAction(DEL_POST, (post) => ({ post }));
+
 
 const initialState = {
  list :[
@@ -62,6 +62,7 @@ const getPostDB = () => {
     await axios
       .get("http://15.164.163.116/api/post")
       .then((response) => {
+       
         dispatch(setPost(response.data.list))
   
    
@@ -91,26 +92,24 @@ const deletePostDB =(postId) => {
 
 
 
-
-
-const getOnePostDB =(postId) => {
-  return async function (dispatch, getState){
-    const token = sessionStorage.getItem("token");
-    await axios({
-      method: "GET",
-      url: `http://15.164.163.116/api/post/delete/${postId}`,
-      headers: {
-        authorization: `Bearer ${token}`,          
-      },
-    }).then((response) => {
-      console.log(response)
-      // dispatch(setPost(response.data))
-    })
+// const getOnePostDB =(postId) => {
+//   return async function (dispatch, getState){
+//     const token = sessionStorage.getItem("token");
+//     await axios({
+//       method: "GET",
+//       url: `http://15.164.163.116/api/post/delete/${postId}`,
+//       headers: {
+//         authorization: `Bearer ${token}`,          
+//       },
+//     }).then((response) => {
+//       console.log(response)
+//       // dispatch(setPost(response.data))
+//     })
     
 
-  }
+//   }
 
-}
+// }
 
 
 
@@ -131,10 +130,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
       }),
-    // [DEL_POST]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.list = action.payload.post;
-    //   }),
+
   },
   initialState
 );
@@ -145,7 +141,7 @@ const actionCreators = {
   addPostDB,
   getPostDB,
   deletePostDB,
-  // getOnePostDB,
+ 
 };
 
 export { actionCreators };
