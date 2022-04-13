@@ -196,12 +196,12 @@ const Input = styled.input`
   box-sizing: border-box;
   border-radius: 10px;
 `;
-const Text = styled.text`
+const Text = styled.p`
   color: "#222831";
   font-size: 15px;
   padding: 0 4px;
 `;
-const Text1 = styled.text`
+const Text1 = styled.p`
   color: "#222831";
   font-size: 11px;
   justify-content: right;

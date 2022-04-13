@@ -23,6 +23,7 @@ const initialState = {
 const signupDB = (id, pwd, pwdCheck, url, ) => {
   return function (dispatch, getState, { history }) {
 // axios 연결하기
+    console.log(id,pwd,)
     axios({
       method: 'post',
       url: 'http://15.164.163.116/api/signup',
@@ -42,7 +43,7 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
           userImageUrl: url,
         })
       );
-      window.alert(`${response.data.id}님 환영합니다! :)`)
+      window.alert(`${id}님 환영합니다! :)`)
       history.push('/login')
     })
     .catch((error)=>{
@@ -72,7 +73,8 @@ const loginDB = (id, pwd) => {
           userId: id,
         })
       );
-      window.alert(`${response.data.id}님 환영합니다! :)`)
+      console.log(response.data)
+      window.alert(`${id}님 환영합니다! :)`)
       history.push("/");
     })
     .catch((error) => {
