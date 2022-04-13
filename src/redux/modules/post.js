@@ -11,7 +11,9 @@ const addPost = createAction(ADD_POST, (post) => ({ post }));
 const getPost = createAction(GET_POST, (post) => ({ post }));
 
 const initialState = {
- list :[]
+ list :[
+  
+ ]
 }
 
 
@@ -64,6 +66,18 @@ const getPostDB = () => {
       
   };
 };
+
+
+const getOnePostDB = () =>{
+  return async function (dispatch, getState){
+    
+  
+}}
+
+
+
+
+
 
 export default handleActions(
   {
