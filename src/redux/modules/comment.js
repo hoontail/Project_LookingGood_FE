@@ -37,7 +37,7 @@ export const getCommentsDB = (postId) => async (dispatch, getState) => {
     axios.get(`http://15.164.163.116/api/comments/get/${postId}`)
   .then(response => {
     console.log(response);
-    dispatch(getComments(response.data.comments));
+    dispatch(getComments(response.data));
   }) 
   .catch(error => {
     console.log(error);
@@ -63,8 +63,8 @@ export const addCommentDB = (token, comment, postId) => {
         }
       )
       .then(function (response) {
-        // dispatch(addComment(response));
-        console.log(response.data);
+        dispatch(addComment(response.data.list));
+       
       })
       .catch(function (error) {
         console.log(error);

@@ -13,7 +13,7 @@ const DetailPage = (props) => {
   const post_list = useSelector((state) => state.post.list);
   const user_info = useSelector((state) => state.User);
   const comments_list = useSelector((state) => state.comment.comments);
-  console.log(comments_list);
+
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
 
@@ -21,10 +21,10 @@ const DetailPage = (props) => {
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-  
+
   useEffect(() => {
     dispatch(commentsActions.getCommentsDB(post._id));
-  },[])
+  }, []);
 
   const postComment = () => {
     dispatch(commentsActions.addCommentDB(token, comment, post._id));
@@ -50,7 +50,7 @@ const DetailPage = (props) => {
           <PosterBox>
             <Text>
               <h3>{post.title}</h3>
-              <br/>
+              <br />
               {post.content}
             </Text>
           </PosterBox>
@@ -62,7 +62,7 @@ const DetailPage = (props) => {
                 <ImageCircle src={comment.userImageUrl} />
                 <Text>{comment.userId}</Text>
                 <Text> {comment.comment}</Text>
-                <Text1> {new Date().toUTCString()}</Text1>
+                <Text1> {comment.createAt}</Text1>
               </SmallBox>
             ))}
           </Box1>
@@ -160,6 +160,7 @@ const Box = styled.div`
 `;
 
 const Box1 = styled.div`
+  display: flex;
   flex-direction: column;
   justify-content: center;
   /* border: 3px solid green; */
@@ -167,7 +168,6 @@ const Box1 = styled.div`
   overflow: auto;
   width: 350px;
   height: 300px;
-  
 `;
 
 const ImageRect = styled.div`
