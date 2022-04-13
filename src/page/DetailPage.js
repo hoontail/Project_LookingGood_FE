@@ -49,7 +49,10 @@ const DetailPage = (props) => {
           </NameTag>
           <PosterBox>
             <Text>
-              <h3>{post.title}</h3>
+
+
+              <div>{post.title}</div>
+
               <br/>
               {post.content}
             </Text>
