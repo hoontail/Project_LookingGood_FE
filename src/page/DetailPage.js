@@ -50,7 +50,7 @@ const DetailPage = (props) => {
           <PosterBox>
             <Text>
               <h3>{post.title}</h3>
-              <p />
+              <br/>
               {post.content}
             </Text>
           </PosterBox>
@@ -197,12 +197,12 @@ const Input = styled.input`
   box-sizing: border-box;
   border-radius: 10px;
 `;
-const Text = styled.p`
+const Text = styled.div`
   color: "#222831";
   font-size: 15px;
   padding: 0 4px;
 `;
-const Text1 = styled.p`
+const Text1 = styled.div`
   color: "#222831";
   font-size: 11px;
   justify-content: right;

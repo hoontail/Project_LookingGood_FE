@@ -30,7 +30,7 @@ console.log("asdfasdf");
             return (
               <figure key={p._id}>
                 <img src={p.imageUrl} onClick ={()=>{
-                  history.push('/detail/'+p._id)
+                  history.push(`/detail/${p._id}`);
                 }}/>
               </figure>
             );
