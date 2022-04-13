@@ -45,6 +45,7 @@ export const getCommentsDB = (postId) => async (dispatch, getState) => {
 };
 
 export const addCommentDB = (token, comment, postId) => {
+
   return function (dispatch, getState) {
     console.log(comment);
     axios
@@ -61,6 +62,7 @@ export const addCommentDB = (token, comment, postId) => {
             Authorization: `Bearer ${token}`,
           },
         }
+
       )
       .then(function (response) {
         dispatch(addComment(response.data.list));
