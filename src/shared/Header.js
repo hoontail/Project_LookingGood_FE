@@ -18,36 +18,61 @@ function Header(props) {
       dispatch(userActions.loginCheckDB());
     }
   }, []);
-    return (
-      <>
-        <Nav>
-          <Imgbox>
-            <Grid padding="10px">
-              <Image
-                src={logo}
-                onClick={() => {
-                  history.push("/");
-                }}
-              />
-            </Grid>
-          </Imgbox>
-          {history.location.pathname === "/" ?
-                    null:
-                    <MenuBar>
-                    <P onClick={() => history.push("/list/TEAM")}>TEAM</P>
-                    <P onClick={() => history.push("/list/SKY")}>SKY</P>
-                    <P onClick={() => history.push("/list/FOOD")}>FOOD</P>
-                    <P onClick={() => history.push("/list/DIARY")}>DIARY</P>
-                    <P onClick={() => history.push("/list/ALGORITHM")}>ALGORITHM</P>
-                    <P onClick={() => history.push("/list/COMMIT")}>COMMIT</P>
-                  </MenuBar>}
-          <Btns>
-            {is_login && is_session ?
-            <LoginBar2/>:<LoginBar/>}
-          </Btns>
-        </Nav>
-      </>
-    );
+  return (
+    <>
+      <Nav>
+        <Imgbox>
+          <Grid padding="10px">
+            <Image
+              src={logo}
+              onClick={() => {
+                history.push("/");
+              }}
+            />
+          </Grid>
+        </Imgbox>
+        {history.location.pathname === "/" ? null : (
+          <MenuBar>
+            {history.location.pathname === "/list/TEAM" ? (
+              <Strong onClick={() => history.push("/list/TEAM")}>TEAM</Strong>
+            ) : (
+              <P onClick={() => history.push("/list/TEAM")}>TEAM</P>
+            )}
+            {history.location.pathname === "/list/SKY" ? (
+              <Strong onClick={() => history.push("/list/SKY")}>SKY</Strong>
+            ) : (
+              <P onClick={() => history.push("/list/SKY")}>SKY</P>
+            )}
+            {history.location.pathname === "/list/FOOD" ? (
+              <Strong onClick={() => history.push("/list/FOOD")}>FOOD</Strong>
+            ) : (
+              <P onClick={() => history.push("/list/FOOD")}>FOOD</P>
+            )}
+            {history.location.pathname === "/list/DIARY" ? (
+              <Strong onClick={() => history.push("/list/DIARY")}>DIARY</Strong>
+            ) : (
+              <P onClick={() => history.push("/list/DIARY")}>DIARY</P>
+            )}
+            {history.location.pathname === "/list/ALGORITHM" ? (
+              <Strong onClick={() => history.push("/list/ALGORITHM")}>
+                ALGORITHM
+              </Strong>
+            ) : (
+              <P onClick={() => history.push("/list/ALGORITHM")}>ALGORITHM</P>
+            )}
+            {history.location.pathname === "/list/COMMIT" ? (
+              <Strong onClick={() => history.push("/list/COMMIT")}>
+                COMMIT
+              </Strong>
+            ) : (
+              <P onClick={() => history.push("/list/COMMIT")}>COMMIT</P>
+            )}
+          </MenuBar>
+        )}
+        <Btns>{is_login && is_session ? <LoginBar2 /> : <LoginBar />}</Btns>
+      </Nav>
+    </>
+  );
 }
 
 export default Header;
@@ -81,14 +106,31 @@ const Image = styled.img`
 `;
 const MenuBar = styled.div`
   background-color: #fafafa;
-  flex-direction: row;
   display: flex;
+  flex-direction: row;
+  align-items: center;
   max-width: 50vw;
-  width: 50vw;
+  width: 50%;
 `;
 
 const P = styled.p`
+  padding: 10px;
   font-size: 20px;
   margin: 10px 30px;
   cursor: pointer;
+  border-radius: 20px;
+  &:hover {
+    background-color: #394481;
+    color: white;
+  }
+`;
+
+const Strong = styled.p`
+  padding: 10px;
+  font-size: 20px;
+  margin: 10px 30px;
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: #394481;
+  color: white;
 `;

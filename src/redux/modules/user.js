@@ -42,7 +42,14 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
           userImageUrl: url,
         })
       );
-    }).catch((err)=>{console.log(err)})
+      window.alert(`${response.data.id}님 환영합니다! :)`)
+      history.push('/login')
+    })
+    .catch((error)=>{
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      window.alert("회원가입에 실패했습니다! 다시 시도해주세요")
+      console.log(errorCode,errorMessage)})
   };
 };
 
@@ -65,7 +72,7 @@ const loginDB = (id, pwd) => {
           userId: id,
         })
       );
-      window.alert("로그인 되었습니다:)")
+      window.alert(`${response.data.id}님 환영합니다! :)`)
       history.push("/");
     })
     .catch((error) => {

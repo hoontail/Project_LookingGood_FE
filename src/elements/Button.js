@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-  const { text, _onClick, is_float, children, margin, width, padding } = props;
+  const { text, _onClick, is_float, children, margin, width, padding, write } = props;
   if (is_float) {
     return (
       <>
@@ -10,6 +10,15 @@ const Button = (props) => {
       </>
     );
   }
+
+  if (write) {
+    return (
+      <>
+        <WriteButton onClick={_onClick}>{text}</WriteButton>
+      </>
+    );
+  }
+
   const styles = {
     margin: margin,
     width: width,
@@ -64,6 +73,32 @@ const FloatButton = styled.button`
   border: none;
   border-radius: 50px;
   vertical-align: middle;
+`;
+
+const WriteButton = styled.button`
+  position: fixed;
+  right: 30px;
+  bottom: 50px;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background-color: #ffffff;
+  color: #394481;
+  box-sizing: border-box;
+  font-size: 36px;
+  font-weight: 800;
+  border: none;
+  box-shadow: 1px 1px 1px gray;
+  border-radius: 50px;
+  padding: 0px 0px 10px 1px;
+  cursor: pointer;
+  &:hover {
+    background-color: #394481;
+    color: #ffffff;
+    box-shadow: 3px 2px 2px gray;
+  }
 `;
 
 export default Button;

@@ -73,7 +73,7 @@ const Signup = () => {
         </Info>
         <Mybtn onClick={() => {
           signup();
-          history.push('/login');
+          window.alert('잠시만 기다려주세요 :)')
         }}>회원가입하기</Mybtn>
       </Signbox>
     </Whole>
