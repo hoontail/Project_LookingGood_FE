@@ -201,6 +201,7 @@ const ImageRect = styled.div`
 `;
 
 const ImageCircle = styled.div`
+  min-width: 50px;
   width: 50px;
   height: 50px;
   border-radius: 50px;
