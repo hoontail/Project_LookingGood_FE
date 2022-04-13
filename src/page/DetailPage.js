@@ -11,9 +11,9 @@ const DetailPage = (props) => {
   const history = useHistory();
   const params = useParams();
   const post_list = useSelector((state) => state.post.list);
+  console.log(post_list)
   const user_info = useSelector((state) => state.User);
   const comments_list = useSelector((state) => state.comment.comments);
-  console.log(comments_list);
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
 
@@ -21,6 +21,7 @@ const DetailPage = (props) => {
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+
   
   useEffect(() => {
     dispatch(commentsActions.getCommentsDB(post._id));
@@ -44,8 +45,8 @@ const DetailPage = (props) => {
         <ImageRect src={post.imageUrl} />
         <Box>
           <NameTag>
-            <ImageCircle src={user_info.userImageUrl} />
-            <Text>{user_info.userId}</Text>
+            <ImageCircle src={post.userImageUrl} />
+            <Text>{post.userId}</Text>
           </NameTag>
           <PosterBox>
             <Text>
@@ -65,7 +66,7 @@ const DetailPage = (props) => {
                 <ImageCircle src={comment.userImageUrl} />
                 <Text>{comment.userId}</Text>
                 <Text> {comment.comment}</Text>
-                <Text1> {new Date().toUTCString()}</Text1>
+                <Text1> {comment.createAt}</Text1>
               </SmallBox>
             ))}
           </Box1>
