@@ -12,34 +12,93 @@ import {
 } from "../redux/modules/comment";
 import { now } from "moment";
 
+/**
+ *  
+ * 
+ * GET POST.
+ {
+    title: "제목입니다",
+    content: "반가워요",
+    userImageUrl: "images/cancle.png",
+    imageUrl: "images/cancle.png",
+    commentIds:[
+        123,
+        234,
+        345
+    ]
+ }
+ * 
+ * 
+ * GET COMMENT.
+ *
+ * 
+  {
+     commentId: 123
+     comment: "좋은 것 같습니다.",
+     userId: "kimjeontae",
+     userImageUrl: "images/cancle.png",
+   }
+ * 
+
+
+Redux order.
+
+(useEffect)
+1. On render (mount) Get Post.
+2. From Post, using commentIds, getComments
+   - dispatch(GET_POST), dispatch(GET_COMMENTS) 
+
+(redux)
+Action, Middleware, Reducer.
+
+Create action example: "GET_POST" and "GET_COMMENTS"
+
+
+
+ */
+
 const DetailPage = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
+
   const postId = useSelector(state => state.post);
+
+  // const post = useSelector(state => state.post);
   const comment_list = useSelector(state => state.post);
-  console.log(comment_list, postId);
+  // console.log(comment_list, postId);
   const [comment, setComment] = useState();
 
   React.useEffect(() => {
     if(!comment_list[postId]){
       // 코멘트 정보가 없으면 불러오기
-      dispatch(getCommentsDB(postId));
+      // dispatch(getCommentsDB(postId));
     }
+
+    // Dispatch Get Actions
+    // Get Post,
+    // Get Comments (using post.commentIds)
+    // exmple: const comments = commentIds.map((commentId) => axios.get(`http://15.164.163.116/api/comments/${commentId}`));
+
   }, []);
 
   // comment가 없거나, post_id가 없으면 아무것도 안넘겨준다!
-  if(!comment_list[postId] || !postId){
-    return null;
-  }
+  // if(!comment_list[postId] || !postId){
+  //   return null;
+  // }
 
   console.log(postId, token);
+
   const onChange = (e) => {
     setComment(e.target.value);
   };
 
   const postComment = () => {
-    dispatch(addCommentDB(postId, token, comment));
+     dispatch(addCommentDB(postId, token, comment));
+
+    // Dispatch Post Comment Action.
+    // dispatch(POST_COMMENT)
+
     setComment("");
   };
 
@@ -64,7 +123,8 @@ const DetailPage = (props) => {
 
           {/* Option 1 */}
           <Box1>
-            {comment_list[postId].map((comment) => (
+            {/* {comment_list[postId].map((comment) => ( */}
+            {comment_list.map((comment) => (
               <SmallBox key={comment.id}>
                 <ImageCircle />
                 <Text>{comment.name}</Text>
