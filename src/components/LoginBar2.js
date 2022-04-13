@@ -52,7 +52,6 @@ const Btn = styled.button`
 const Name = styled.div`
   display: flex;
   align-items: center;
-  width: 50px;
   height: 50px;
   margin: 0px 10px 0px 5px;
 `

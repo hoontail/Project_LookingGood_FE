@@ -39,7 +39,7 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
           userImageUrl: url,
         })
       );
-      window.alert(`${response.data.id}님 환영합니다! :)`)
+      window.alert(`${id}님 환영합니다! :)`)
       history.push('/login')
     })
     .catch((error)=>{
@@ -60,16 +60,15 @@ const loginDB = (id, pwd) => {
         password : pwd,
       }
     })
-    .then(function(response) {
+    .then(async function(response) {
       sessionStorage.setItem("token", response.data.token);
-      console.log(response)
       dispatch(
         getUser({
           userId: id,
         })
 
       );dispatch(loginCheckDB())
-      window.alert(`${response.data.id}님 환영합니다! :)`)
+      window.alert(`${id}님 환영합니다! :)`)
       history.push("/");
     })
     .catch((error) => {

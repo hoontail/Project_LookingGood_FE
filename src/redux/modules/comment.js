@@ -66,7 +66,7 @@ export const addCommentDB = (token, comment, postId) => {
       )
       .then(function (response) {
         dispatch(addComment(response.data.list));
-       
+
       })
       .catch(function (error) {
         console.log(error);
