@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import {actionCreators as userActions} from "../redux/modules/user"
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configstore";
+import Button from "../elements/Button"
 
 
 function App() {
@@ -13,6 +14,10 @@ function App() {
   const dispatch = useDispatch();
 
   const is_session = sessionStorage.getItem("token") ? true : false;
+
+  const write = () => {
+    history.push('/write')
+  }
 
   React.useEffect(() => {
     if (is_session) {
@@ -32,6 +37,7 @@ function App() {
         {/* <Route path="/edit/:id" component={PostEdit} exact/> */}
         <Route path="/list/:category" component={Postlist}/>
         <Route path="/detail/:postid" component={DetailPage}/>
+        {is_session? null: <Button write text="+" _onClick={write}></Button>}
       </ConnectedRouter>
   
     </>

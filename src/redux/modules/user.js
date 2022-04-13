@@ -21,9 +21,9 @@ const initialState = {
 
 // middleware
 const signupDB = (id, pwd, pwdCheck, url, ) => {
-  return async function (dispatch, getState, { history }) {
+  return function (dispatch, getState, { history }) {
 // axios 연결하기
-    await axios({
+    axios({
       method: 'post',
       url: 'http://15.164.163.116/api/signup',
       data: {
@@ -42,7 +42,14 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
           userImageUrl: url,
         })
       );
-    }).catch((err)=>{console.log(err)})
+      window.alert(`${response.data.id}님 환영합니다! :)`)
+      history.push('/login')
+    })
+    .catch((error)=>{
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      window.alert("회원가입에 실패했습니다! 다시 시도해주세요")
+      console.log(errorCode,errorMessage)})
   };
 };
 
@@ -65,15 +72,16 @@ const loginDB = (id, pwd) => {
           userId: id,
         })
       );
+      window.alert(`${response.data.id}님 환영합니다! :)`)
+      history.push("/");
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-
+      window.alert("로그인에 실패했습니다! 다시 시도해주세요")
       console.log(errorCode, errorMessage);
     });
 
-    history.push("/");
   };
 };
 
