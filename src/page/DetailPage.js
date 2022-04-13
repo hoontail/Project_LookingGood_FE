@@ -20,18 +20,23 @@ const DetailPage = (props) => {
   const token = sessionStorage.getItem("token");
 
   const post = post_list.find((p) => p._id === params.postid);
-  console.log(post.userId);
-
-  console.log();
+  
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
   useEffect(() => {
     dispatch(commentsActions.getCommentsDB(post._id));
+    dispatch(postActions.getOnePostDB(post._id))
   }, []);
 
   const postComment = () => {
+    
+    if(comment ===""){
+      window.alert("내용을 입력 해주세요")
+      return
+    }
+    
     dispatch(commentsActions.addCommentDB(token, comment, post._id));
 
     setComment("");
@@ -62,7 +67,9 @@ const DetailPage = (props) => {
             <BtnGroup>
               {post.userId === user_info.user.userId ? (
                 <>
-                  <EDBtn>수정</EDBtn>
+                  <EDBtn onClick={()=>{
+                    history.push("/edit/"+post._id)
+                  }}>수정</EDBtn>
                   <EDBtn onClick={deletePost}>삭제</EDBtn>
                 </>
               ) : (
@@ -161,12 +168,14 @@ const SmallBox = styled.div`
   align-items: center;
   float: left;
   /* border: 2px solid red; */
+  
 `;
 
 const BigBox = styled.div`
   margin: auto;
   display: flex;
   align-items: center;
+ 
 
   /* border: 3px solid blue; */
 `;
@@ -175,7 +184,7 @@ const Box = styled.div`
   flex-direction: column;
   /* align-items: center; */
   justify-content: center;
-  border: 1px solid #394481;
+  border: 1px solid gray;
   padding: 0 1em;
   margin: 1em;
   width: 400px;
