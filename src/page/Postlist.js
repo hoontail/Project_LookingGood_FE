@@ -30,7 +30,9 @@ const Postlist = (props) => {
           .map((p, idx) => {
             return (
               <figure key={p._id}>
-                <img src={p.imageUrl} />
+                <img src={p.imageUrl} onClick ={()=>{
+                  history.push('/detail/'+p._id)
+                }}/>
               </figure>
             );
           })}
