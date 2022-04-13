@@ -25,7 +25,7 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
 // axios 연결하기
     await axios({
       method: 'post',
-      url: 'http://13.124.238.92/api/signup',
+      url: 'http://15.164.163.116/api/signup',
       data: {
         userId: id,
         password: pwd,
@@ -51,7 +51,7 @@ const loginDB = (id, pwd) => {
   //axios 연결하기
     axios({
       method: 'post',
-      url: 'http://13.124.238.92/api/login',
+      url: 'http://15.164.163.116/api/login',
       data: {
         userId: id,
         password : pwd,
@@ -69,7 +69,7 @@ const loginDB = (id, pwd) => {
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-
+      window.alert("로그인에 실패했습니다! 다시 시도해주세요")
       console.log(errorCode, errorMessage);
     });
 
@@ -82,7 +82,7 @@ const loginCheckDB = () => {
   return function (dispatch, getState, {history}){
     axios({
       method: 'get',
-      url: 'http://13.124.238.92/api/checkLogin',
+      url: 'http://15.164.163.116/api/checkLogin',
       headers: {
         authorization: `Bearer ${token}`
       }
