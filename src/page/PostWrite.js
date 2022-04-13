@@ -46,6 +46,8 @@ function PostWrite(props) {
     formData.append('title', post.title)
     formData.append('category', post.category)
     formData.append('content', post.content)
+    formData.append('date',"")
+    formData.append('userId',"")
 }
     
 

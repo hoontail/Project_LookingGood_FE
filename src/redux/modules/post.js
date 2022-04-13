@@ -19,13 +19,13 @@ const initialState = {
 const addPostDB = (formData) => {
   const token = sessionStorage.getItem("token");
   return async function (dispatch, getState) {
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
     try {
       await axios({
         method: "post",
-        url: "http://13.124.238.92/write_modify/user/postadd",
+        url: "http://15.164.163.116/api/post",
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -52,10 +52,10 @@ const getPostDB = () => {
 
    
     await axios
-      .get("https://6251cd8b7f7fa1b1dddf39b0.mockapi.io/post")
+      .get("http://15.164.163.116/api/post")
       .then((response) => {
-        console.log(response.data);
-        dispatch(setPost(response.data))
+        dispatch(setPost(response.data.list))
+  
    
       })
       .catch((error) => {
@@ -73,7 +73,6 @@ export default handleActions(
       }),
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.post_list)
         draft.list = action.payload.post_list;
       }),
     [ADD_POST]: (state, action) =>

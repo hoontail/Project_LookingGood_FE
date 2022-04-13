@@ -25,7 +25,7 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
 // axios 연결하기
     await axios({
       method: 'post',
-      url: 'http://13.124.238.92/api/signup',
+      url: 'http://15.164.163.116/api/signup',
       data: {
         userId: id,
         password: pwd,
@@ -42,7 +42,7 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
           userImageUrl: url,
         })
       );
-    })
+    }).catch((err)=>{console.log(err)})
   };
 };
 
@@ -51,7 +51,7 @@ const loginDB = (id, pwd) => {
   //axios 연결하기
     axios({
       method: 'post',
-      url: 'http://13.124.238.92/api/login',
+      url: 'http://15.164.163.116/api/login',
       data: {
         userId: id,
         password : pwd,
@@ -82,17 +82,13 @@ const loginCheckDB = () => {
   return function (dispatch, getState, {history}){
     axios({
       method: 'get',
-      url: 'http://13.124.238.92/api/checkLogin',
+      url: 'http://15.164.163.116/api/checkLogin',
       headers: {
         authorization: `Bearer ${token}`
       }
     })
     .then(function(user){
       if(user){
-<<<<<<< HEAD
-=======
-
->>>>>>> 866a999053525d4a1ea9d4358aff01e7a6508725
         dispatch(
           getUser({
             userId: user.data.userId,
