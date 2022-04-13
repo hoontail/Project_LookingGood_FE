@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import { Login, Signup, Main, PostWrite, Postlist, DetailPage} from "../page/pages";
 import { BrowserRouter, Route } from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {actionCreators as userActions} from "../redux/modules/user"
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configstore";
@@ -10,7 +10,7 @@ import Button from "../elements/Button"
 
 
 function App() {
-  
+  const login = useSelector(state => state)
   const dispatch = useDispatch();
 
   const is_session = sessionStorage.getItem("token") ? true : false;
