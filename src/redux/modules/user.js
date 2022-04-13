@@ -42,8 +42,7 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
           userImageUrl: url,
         })
       );
-    })
-    .catch((err)=>{console.log(err)})
+    }).catch((err)=>{console.log(err)})
   };
 };
 
