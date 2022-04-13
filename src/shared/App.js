@@ -37,7 +37,7 @@ function App() {
         {/* <Route path="/edit/:id" component={PostEdit} exact/> */}
         <Route path="/list/:category" component={Postlist}/>
         <Route path="/detail/:postid" component={DetailPage}/>
-        {is_session? null: <Button write text="+" _onClick={write}></Button>}
+        {is_session? <Button create text="+" _onClick={write}></Button> : null}
       </ConnectedRouter>
   
     </>
