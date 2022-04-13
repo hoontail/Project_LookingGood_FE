@@ -49,16 +49,11 @@ const DetailPage = (props) => {
           </NameTag>
           <PosterBox>
             <Text>
-<<<<<<< HEAD
-              <h3>{post.title}</h3>
-              <br />
-=======
 
 
               <div>{post.title}</div>
 
               <br/>
->>>>>>> d56e19f5132903d485a21633ba1e085e071eaa2a
               {post.content}
             </Text>
           </PosterBox>
