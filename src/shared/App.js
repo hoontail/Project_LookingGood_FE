@@ -10,11 +10,14 @@ import Button from "../elements/Button"
 
 
 function App() {
-  const login = useSelector(state => state)
+ 
   const dispatch = useDispatch();
-
+  const login = useSelector((state) => state.User.is_login);
+  
   const is_session = sessionStorage.getItem("token") ? true : false;
 
+  
+  
   const write = () => {
     history.push('/write')
   }
