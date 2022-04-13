@@ -1,6 +1,8 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
+import { actionCreators as imageActions } from "./image";
+
 
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
@@ -31,9 +33,10 @@ const addPostDB = (formData) => {
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${token}`,          
         },
       });
+      dispatch(imageActions.resetPreview())
     } catch (error) {
       console.log(error);
     }
