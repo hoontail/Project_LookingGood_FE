@@ -79,7 +79,6 @@ const deletePostDB =(postId) => {
       method: "DELETE",
       url: `http://15.164.163.116/api/post/delete/${postId}`,
       headers: {
-        "Content-Type": "multipart/form-data",
         authorization: `Bearer ${token}`,          
       },
     });
