@@ -21,9 +21,9 @@ const initialState = {
 
 // middleware
 const signupDB = (id, pwd, pwdCheck, url, ) => {
-  return async function (dispatch, getState, { history }) {
+  return function (dispatch, getState, { history }) {
 // axios 연결하기
-    await axios({
+    axios({
       method: 'post',
       url: 'http://15.164.163.116/api/signup',
       data: {
@@ -43,6 +43,7 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
         })
       );
     })
+    .catch((err)=>{console.log(err)})
   };
 };
 
@@ -65,6 +66,8 @@ const loginDB = (id, pwd) => {
           userId: id,
         })
       );
+      window.alert("로그인 되었습니다:)")
+      history.push("/");
     })
     .catch((error) => {
       var errorCode = error.code;
@@ -73,7 +76,6 @@ const loginDB = (id, pwd) => {
       console.log(errorCode, errorMessage);
     });
 
-    history.push("/");
   };
 };
 

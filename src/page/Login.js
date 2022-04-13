@@ -56,7 +56,7 @@ const Login = () => {
         <Button
           onClick={() => {
             login();
-            history.push("/");
+            window.alert("잠시만 기다려주세요!")
           }}
         >
           로그인하기
