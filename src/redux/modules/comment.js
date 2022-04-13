@@ -6,12 +6,11 @@ const ADD = "comment/ADD";
 const LOAD = "comment/LOAD";
 const DELETE = "comment/DELETE";
 
-const GET_COMMENTS = "GET_COMMENTS"
+const GET_COMMENTS = "GET_COMMENTS";
 
 const EDIT = "comment/EDIT";
 
 // action creator
-
 
 // compponents
 // actions
@@ -28,8 +27,13 @@ const editComment = createAction(EDIT, (coId, newContent) => ({
 
 // initialState
 const initialState = {
-  comment: null,
-  comments: [],
+  comment: [
+    {
+      id: "0",
+      name: "haha",
+      comment: "hoho"
+    },
+  ],
 };
 
 //middleware
@@ -40,31 +44,22 @@ export const editCommentDB =
     setEditMode(false);
   };
 
-// (*) async getComments() 
+// (*) async getComments()
 // make axios.get call here (?)
 
-export const getCommentsDB = (commentIds) =>
-  async (dispatch, getState,) => {
-
-
-    try {
-
-      // call (*) getComments to make async call to fetch comments.
-      // const comments = commentIds.map((commentId) => axios.get(`http://15.164.163.116/api/comments/${commentId}`));
-      // Pass comments to Reducer.
-    } catch (e) {
-
-    }
-  };
-
-
-
+export const getCommentsDB = (commentIds) => async (dispatch, getState) => {
+  try {
+    // call (*) getComments to make async call to fetch comments.
+    // const comments = commentIds.map((commentId) => axios.get(`http://15.164.163.116/api/comments/${commentId}`));
+    // Pass comments to Reducer.
+  } catch (e) {}
+};
 
 export const addCommentDB = (postId, token, comment) => {
   return function (dispatch, getState) {
     axios
       .post({
-        url: 'https://62565de452d8738c692e515a.mockapi.io/comments',
+        url: "https://62565de452d8738c692e515a.mockapi.io/comments",
         data: {
           postId: postId,
           comment: comment,
@@ -80,10 +75,10 @@ export const addCommentDB = (postId, token, comment) => {
 };
 
 export const deleteCommentDB = (id, coId) => (dispatch) => {
-	try {
-		axios.delete(id, coId);
-		dispatch(delComment(coId));
-	} catch (e) {}
+  try {
+    axios.delete(id, coId);
+    dispatch(delComment(coId));
+  } catch (e) {}
 };
 
 // reducer
@@ -141,9 +136,9 @@ export default handleActions(
 
 const actionCreators = {
   addCommentDB,
-	getCommentsDB,
-	editCommentDB,
-	deleteCommentDB
+  getCommentsDB,
+  editCommentDB,
+  deleteCommentDB,
 };
 
 export { actionCreators };

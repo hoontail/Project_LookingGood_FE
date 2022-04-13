@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getCookie } from "../redux/modules/Cookie";
@@ -62,24 +62,19 @@ const DetailPage = (props) => {
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
 
-  const postId = useSelector(state => state.post);
-
-  // const post = useSelector(state => state.post);
-  const comment_list = useSelector(state => state.post);
+  const params = useParams();
+  console.log(params.postid);
+  const comment_list = useSelector((state) => state.comment.comment);
   // console.log(comment_list, postId);
   const [comment, setComment] = useState();
 
   React.useEffect(() => {
-    if(!comment_list[postId]){
-      // 코멘트 정보가 없으면 불러오기
-      // dispatch(getCommentsDB(postId));
-    }
+    
 
     // Dispatch Get Actions
     // Get Post,
     // Get Comments (using post.commentIds)
     // exmple: const comments = commentIds.map((commentId) => axios.get(`http://15.164.163.116/api/comments/${commentId}`));
-
   }, []);
 
   // comment가 없거나, post_id가 없으면 아무것도 안넘겨준다!
@@ -87,22 +82,20 @@ const DetailPage = (props) => {
   //   return null;
   // }
 
-  console.log(postId, token);
+  console.log(token, comment_list);
 
   const onChange = (e) => {
     setComment(e.target.value);
   };
 
   const postComment = () => {
-     dispatch(addCommentDB(postId, token, comment));
+    dispatch(addCommentDB(token, comment));
+    setComment("");
 
     // Dispatch Post Comment Action.
     // dispatch(POST_COMMENT)
 
-    setComment("");
   };
-
-
 
   return (
     <Main>
@@ -124,7 +117,7 @@ const DetailPage = (props) => {
           {/* Option 1 */}
           <Box1>
             {/* {comment_list[postId].map((comment) => ( */}
-            {comment_list.map((comment) => (
+            {comment_list.map((comment, idx) => (
               <SmallBox key={comment.id}>
                 <ImageCircle />
                 <Text>{comment.name}</Text>
@@ -227,6 +220,9 @@ const Box1 = styled.div`
   justify-content: center;
   /* border: 3px solid green; */
   height: 300px;
+  overflow: auto;
+  width: 350px;
+  height: 300px;
 `;
 
 const ImageRect = styled.div`
@@ -256,12 +252,12 @@ const Input = styled.input`
   box-sizing: border-box;
   border-radius: 10px;
 `;
-const Text = styled.text`
+const Text = styled.p`
   color: "#222831";
   font-size: 15px;
   padding: 0 4px;
 `;
-const Text1 = styled.text`
+const Text1 = styled.p`
   color: "#222831";
   font-size: 11px;
   justify-content: right;
