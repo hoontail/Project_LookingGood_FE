@@ -12,7 +12,7 @@ const DetailPage = (props) => {
   const history = useHistory();
   const params = useParams();
   const post_list = useSelector((state) => state.post.list);
-  console.log(post_list)
+
   const user_info = useSelector((state) => state.User);
   const comments_list = useSelector((state) => state.comment.comments);
 
@@ -20,10 +20,12 @@ const DetailPage = (props) => {
   const token = sessionStorage.getItem("token");
 
   const post = post_list.find((p) => p._id === params.postid);
+  console.log(post.userId);
+
+  console.log();
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-
 
   useEffect(() => {
     dispatch(commentsActions.getCommentsDB(post._id));
@@ -42,12 +44,8 @@ const DetailPage = (props) => {
   };
 
   const deletePost = () => {
-    dispatch(postActions.deletePostDB(post._id))
-  
-  }
-
-
-
+    dispatch(postActions.deletePostDB(post._id));
+  };
 
   return (
     <Main>
@@ -55,15 +53,25 @@ const DetailPage = (props) => {
         <ImageRect src={post.imageUrl} />
         <Box>
           <NameTag>
+           
+           
+           <N>
             <ImageCircle src={post.userImageUrl} />
             <Text>{post.userId}</Text>
-
+        </N>
             <BtnGroup>
-            <EDBtn>수정하기</EDBtn>
-            <EDBtn onClick = {deletePost}>삭제하기</EDBtn>
-          </BtnGroup>
-
+              {post.userId === user_info.user.userId ? (
+                <>
+                  <EDBtn>수정</EDBtn>
+                  <EDBtn onClick={deletePost}>삭제</EDBtn>
+                </>
+              ) : (
+                null
+              )}
+            </BtnGroup>
+         
           </NameTag>
+
           <PosterBox>
             <Text>
               <div>{post.title}</div>
@@ -111,6 +119,7 @@ const NameTag = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  justify-content: space-between;
 `;
 
 const PosterBox = styled.div`
@@ -228,12 +237,19 @@ const Text1 = styled.div`
 `;
 
 const EDBtn = styled.button`
-padding : 5px;
-margin-left: 10px;
-
-`
+  padding: 5px;
+  margin-left: 10px;
+`;
 const BtnGroup = styled.div`
-padding: 16px;
-margin-left: 65px;
+  padding: 16px;
+  margin-left: 90px;
+  flex-direction: column;
+`;
+
+const N = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
 `
+
 export default DetailPage;
