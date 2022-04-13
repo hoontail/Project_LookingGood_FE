@@ -3,12 +3,14 @@ import styled from "styled-components";
 import Category from "../components/Category";
 import Image from "../elements/Image";
 import Input from "../elements/Input";
+import {  useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image";
 function PostWrite(props) {
   const dispatch = useDispatch();
   const preview = useSelector((state) => state.image.preview);
+  const history = useHistory();
 
   const fileInput = React.useRef(null);
 
@@ -57,10 +59,14 @@ function PostWrite(props) {
 }
   const addPostDB = () => {
     if (post.title === "" || post.content === "") {
-      window.alert("내용을 추가 해 주세요");
+      window.alert("내용을 추가 해주세요");
       return;
     }
+    if (fileInput===null){
+      window.alert('이미지를 추가 해주세요')
+    }
     dispatch(postActions.addPostDB(formData));
+    history.push('/')
   };
 
   return (
@@ -92,7 +98,8 @@ function PostWrite(props) {
             _onChange={handleForm}
           />
         </AddBox>
-        <AddBtn onClick={addPostDB}>작성하기</AddBtn>
+        <AddBtn onClick={addPostDB}
+        >작성하기</AddBtn>
       </Container>
     </>
   );

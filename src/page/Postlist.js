@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Mason from "./Mason.css";
-import post, { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 const Postlist = (props) => {
   const params = useParams();
