@@ -10,53 +10,27 @@ const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const getPost = createAction(GET_POST, (post) => ({ post }));
 
-const initialState = [
-  { category: "SKY", imgUrl: "https://assets.codepen.io/12005/windmill.jpg" },
-  {
-    category: "SKY",
-    imgUrl: "https://assets.codepen.io/12005/suspension-bridge.jpg",
-  },
-  {
-    category: "COMMIT",
-    imgUrl: "https://assets.codepen.io/12005/suspension-bridge.jpg",
-  },
-  { category: "COMMIT", imgUrl: "https://assets.codepen.io/12005/sunset.jpg" },
-  {
-    category: "COMMIT",
-    imgUrl: "https://assets.codepen.io/12005/bristol-harbor.jpg",
-  },
-  { category: "SKY", imgUrl: "https://assets.codepen.io/12005/toronto.jpg" },
-  {
-    category: "TEAM",
-    imgUrl: "https://assets.codepen.io/12005/dog-balloon.jpg",
-  },
-  {
-    category: "TEAM",
-    imgUrl: "https://assets.codepen.io/12005/bristol-balloons2.jpg",
-  },
-  {
-    category: "TEAM",
-    imgUrl:
-      "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/26c2d072-a5b5-45ac-bba2-8d190b72ac06/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220411%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220411T080658Z&X-Amz-Expires=86400&X-Amz-Signature=ed1467868c7fdf3354ed61cfac1add3ad557cd7978fdab2b9b133f38f173ef25&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject",
-  },
-  {
-    category: "TEAM",
-    imgUrl:
-      "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0de7043e-63eb-4487-b1dd-74e4caaec9a5/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220411%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220411T080749Z&X-Amz-Expires=86400&X-Amz-Signature=28659434db7c33e9bfbb808e2b71b3637e5c674690bb94b2d40109556926fe13&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject",
-  },
-];
+const initialState = {
+ list :[]
+}
+
+
 
 const addPostDB = (formData) => {
+  const token = sessionStorage.getItem("token");
   return async function (dispatch, getState) {
-    //     for (var pair of formData.entries()) {
-    //       console.log(pair[0]+ ', ' + pair[1]);
-    //  }
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
     try {
       await axios({
         method: "post",
-        url: 'http://3.38.253.146/write_modify/user/postadd',
+        url: "http://15.164.163.116/api/post",
         data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: `Bearer ${token}`,
+        },
       });
     } catch (error) {
       console.log(error);
@@ -74,7 +48,21 @@ const addPostDB = (formData) => {
 };
 
 const getPostDB = () => {
-  return async function (dispatch, getState) {};
+  return async function (dispatch, getState) {
+
+   
+    await axios
+      .get("http://15.164.163.116/api/post")
+      .then((response) => {
+        dispatch(setPost(response.data.list))
+  
+   
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
+  };
 };
 
 export default handleActions(
@@ -99,7 +87,7 @@ const actionCreators = {
   setPost,
   addPost,
   addPostDB,
-  getPost,
+  getPostDB,
 };
 
 export { actionCreators };

@@ -31,7 +31,7 @@ function App() {
         <Route path="/signup" component={Signup}/>
         {/* <Route path="/edit/:id" component={PostEdit} exact/> */}
         <Route path="/list/:category" component={Postlist}/>
-        <Route path="/detail" component={DetailPage}/>
+        <Route path="/detail/:postid" component={DetailPage}/>
       </ConnectedRouter>
   
     </>
