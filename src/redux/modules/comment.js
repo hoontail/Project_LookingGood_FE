@@ -5,9 +5,7 @@ import axios from "axios";
 const ADD = "comment/ADD";
 const LOAD = "comment/LOAD";
 const DELETE = "comment/DELETE";
-
 const GET_COMMENTS = "GET_COMMENTS";
-
 const EDIT = "comment/EDIT";
 
 // action creator
@@ -27,25 +25,23 @@ const editComment = createAction(EDIT, (coId, newContent) => ({
 
 // initialState
 const initialState = {
-  comment: [
-    {
-      id: "0",
-      name: "haha",
-      comment: "hoho",
-    },
-  ],
+  comments: [],
 };
 
 //middleware
 // (*) async getComments()
 // make axios.get call here (?)
 
-export const getCommentsDB = (commentIds) => async (dispatch, getState) => {
-  try {
-    // call (*) getComments to make async call to fetch comments.
-    // const comments = commentIds.map((commentId) => axios.get(`http://15.164.163.116/api/comments/${commentId}`));
-    // Pass comments to Reducer.
-  } catch (e) {}
+export const getCommentsDB = (postId) => async (dispatch, getState) => {
+  
+    axios.get(`http://15.164.163.116/api/comments/get/${postId}`)
+  .then(response => {
+    console.log(response);
+    dispatch(getComments(response.data.comments));
+  }) 
+  .catch(error => {
+    console.log(error);
+  })
 };
 
 export const addCommentDB = (token, comment, postId) => {
@@ -67,7 +63,8 @@ export const addCommentDB = (token, comment, postId) => {
         }
       )
       .then(function (response) {
-        console.log(response);
+        // dispatch(addComment(response));
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -75,11 +72,13 @@ export const addCommentDB = (token, comment, postId) => {
   };
 };
 
-export const deleteCommentDB = (id, coId) => (dispatch) => {
+export const deleteCommentDB = (postId) => (dispatch) => {
   try {
-    axios.delete(id, coId);
-    dispatch(delComment(coId));
-  } catch (e) {}
+    axios.delete(postId);
+  } catch (error) {
+    console.log(error);
+  }
+  dispatch(delComment(postId));
 };
 
 // reducer
@@ -99,14 +98,6 @@ export default handleActions(
         comments: action.payload.comment,
       };
     },
-
-    // GET_COMMENTS reducer will look like this.
-    // [GET_COMMENTS]: (state, action) => {
-    //   return {
-    //     ...state,
-    //     comments: action.payload.comment,
-    //   };
-    // },
 
     [DELETE]: (state, action) => {
       return {
@@ -138,7 +129,6 @@ export default handleActions(
 const actionCreators = {
   addCommentDB,
   getCommentsDB,
-
   deleteCommentDB,
 };
 

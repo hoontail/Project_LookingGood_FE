@@ -4,31 +4,31 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getCookie } from "../redux/modules/Cookie";
-import {
-  addCommentDB,
-  getCommentsDB,
-  editCommentDB,
-  deleteCommentDB,
-} from "../redux/modules/comment";
 import { now } from "moment";
+import { actionCreators as commentsActions } from "../redux/modules/comment";
 
 const DetailPage = (props) => {
   const history = useHistory();
   const params = useParams();
   const post_list = useSelector((state) => state.post.list);
   const user_info = useSelector((state) => state.User);
+  const comments_list = useSelector((state) => state.comment.comments);
+  console.log(comments_list);
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
-  console.log(user_info);
 
   const post = post_list.find((p) => p._id === params.postid);
-  console.log(post._id);
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  
+  useEffect(() => {
+    dispatch(commentsActions.getCommentsDB(post._id));
+  },[])
 
   const postComment = () => {
-    dispatch(addCommentDB(token, comment, post._id));
+    dispatch(commentsActions.addCommentDB(token, comment, post._id));
+
     setComment("");
 
     // Dispatch Post Comment Action.
@@ -57,10 +57,10 @@ const DetailPage = (props) => {
 
           {/* Option 1 */}
           <Box1>
-            {comments.map((comment) => (
+            {comments_list.map((comment) => (
               <SmallBox>
-                <ImageCircle src={user_info.userImageUrl} />
-                <Text>{comment.name}</Text>
+                <ImageCircle src={comment.userImageUrl} />
+                <Text>{comment.userId}</Text>
                 <Text> {comment.comment}</Text>
                 <Text1> {new Date().toUTCString()}</Text1>
               </SmallBox>
