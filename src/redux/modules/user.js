@@ -66,11 +66,8 @@ const loginDB = (id, pwd) => {
         getUser({
           userId: id,
         })
-      );
-      dispatch(
-        loginCheckDB()
-      )
-      console.log(response.data)
+
+      );dispatch(loginCheckDB())
       window.alert(`${id}님 환영합니다! :)`)
       history.push("/");
     })
