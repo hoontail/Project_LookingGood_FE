@@ -4,6 +4,7 @@ import { Login, Signup, Main, PostWrite, Postlist, DetailPage} from "../page/pag
 import { BrowserRouter, Route } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {actionCreators as userActions} from "../redux/modules/user"
+import { actionCreators as imageActions } from "../redux/modules/image";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configstore";
 import Button from "../elements/Button"
@@ -26,6 +27,7 @@ function App() {
     if (is_session) {
       dispatch(userActions.loginCheckDB());
     }
+
   }, []);
 
   return (

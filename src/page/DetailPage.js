@@ -12,10 +12,10 @@ const DetailPage = (props) => {
   const history = useHistory();
   const params = useParams();
   const post_list = useSelector((state) => state.post.list);
-  const user_info = useSelector((state) => state.User.user);
+  console.log(post_list)
+  const user_info = useSelector((state) => state.User);
   const comments_list = useSelector((state) => state.comment.comments);
 
-  
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
 
@@ -23,6 +23,7 @@ const DetailPage = (props) => {
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+
   
   useEffect(() => {
     dispatch(commentsActions.getCommentsDB(post._id));
@@ -54,12 +55,13 @@ const DetailPage = (props) => {
         <ImageRect src={post.imageUrl} />
         <Box>
           <NameTag>
-            <ImageCircle src={user_info.userImageUrl} />
-            <Text>{user_info.userId}</Text>
+            <ImageCircle src={post.userImageUrl} />
+            <Text>{post.userId}</Text>
             <BtnGroup>
             <EDBtn>수정하기</EDBtn>
             <EDBtn onClick = {deletePost}>삭제하기</EDBtn>
           </BtnGroup>
+
           </NameTag>
           <PosterBox>
             <Text>
@@ -79,7 +81,7 @@ const DetailPage = (props) => {
                 <ImageCircle src={comment.userImageUrl} />
                 <Text>{comment.userId}</Text>
                 <Text> {comment.comment}</Text>
-                <Text1> {new Date().toUTCString()}</Text1>
+                <Text1> {comment.createAt}</Text1>
               </SmallBox>
             ))}
           </Box1>

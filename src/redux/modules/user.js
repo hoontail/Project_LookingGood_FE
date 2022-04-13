@@ -60,9 +60,8 @@ const loginDB = (id, pwd) => {
         password : pwd,
       }
     })
-    .then(function(response) {
+    .then(async function(response) {
       sessionStorage.setItem("token", response.data.token);
-      console.log(response)
       dispatch(
         getUser({
           userId: id,
