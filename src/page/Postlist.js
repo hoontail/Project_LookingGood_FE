@@ -17,6 +17,7 @@ const Postlist = (props) => {
       dispatch(postActions.getPostDB());
 
   }, []);   
+
   // 여기서 dispatch를 해주면 데이터 로딩이 느려서 메인으로 옮김... 3시간고생
 
   return (
@@ -29,9 +30,12 @@ const Postlist = (props) => {
           .map((p, idx) => {
             return (
               <figure key={p._id}>
-                <img src={p.imageUrl} onClick ={()=>{
-                  history.push(`/detail/${p._id}`);
-                }}/>
+                <img
+                  src={p.imageUrl}
+                  onClick={() => {
+                    history.push(`/detail/${p._id}`);
+                  }}
+                />
               </figure>
             );
           })}

@@ -24,10 +24,10 @@ const DetailPage = (props) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
-  
+
   useEffect(() => {
     dispatch(commentsActions.getCommentsDB(post._id));
-  },[])
+  }, []);
 
   const postComment = () => {
     dispatch(commentsActions.addCommentDB(token, comment, post._id));
@@ -57,6 +57,7 @@ const DetailPage = (props) => {
           <NameTag>
             <ImageCircle src={post.userImageUrl} />
             <Text>{post.userId}</Text>
+
             <BtnGroup>
             <EDBtn>수정하기</EDBtn>
             <EDBtn onClick = {deletePost}>삭제하기</EDBtn>
@@ -65,11 +66,9 @@ const DetailPage = (props) => {
           </NameTag>
           <PosterBox>
             <Text>
-
-
               <div>{post.title}</div>
 
-              <br/>
+              <br />
               {post.content}
             </Text>
           </PosterBox>
@@ -179,6 +178,7 @@ const Box = styled.div`
 `;
 
 const Box1 = styled.div`
+  display: flex;
   flex-direction: column;
   justify-content: center;
   /* border: 3px solid green; */
@@ -186,7 +186,6 @@ const Box1 = styled.div`
   overflow: auto;
   width: 350px;
   height: 300px;
-  
 `;
 
 const ImageRect = styled.div`
