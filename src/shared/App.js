@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Header";
-import { Login, Signup, Main, PostWrite, Postlist, DetailPage} from "../page/pages";
+import { Login, Signup, Main, PostWrite, Postlist, DetailPage, PostEdit} from "../page/pages";
 import { BrowserRouter, Route } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {actionCreators as userActions} from "../redux/modules/user"
@@ -39,7 +39,7 @@ function App() {
         <Route path="/write" component={PostWrite}/>
         <Route path="/login" component={Login}/>
         <Route path="/signup" component={Signup}/>
-        {/* <Route path="/edit/:id" component={PostEdit} exact/> */}
+        <Route path="/edit/:postid" component={PostEdit} exact/>
         <Route path="/list/:category" component={Postlist}/>
         <Route path="/detail/:postid" component={DetailPage}/>
         {is_session? <Button create text="+" _onClick={write}></Button> : null}

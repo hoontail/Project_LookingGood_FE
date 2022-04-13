@@ -1,16 +1,21 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Category from "../components/Category";
 import Image from "../elements/Image";
 import Input from "../elements/Input";
 function PostWrite(props) {
-  const post_id = props.match.params.id
-  console.log(post_id)
+  const params = useParams()
+  console.log(params.postid)
   const [post, setPost] = React.useState({
     title: "",
     category: "SKY",
     content: "",
   });
+
+  const post_list = useSelector((state) => state.post.list)
+  
   const handleForm = (e) => {
     setPost({
       ...post,

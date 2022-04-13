@@ -93,11 +93,24 @@ const deletePostDB =(postId) => {
 
 
 
-const getOnePostDB = () =>{
+const getOnePostDB =(postId) => {
   return async function (dispatch, getState){
+    const token = sessionStorage.getItem("token");
+    await axios({
+      method: "GET",
+      url: `http://15.164.163.116/api/post/delete/${postId}`,
+      headers: {
+        authorization: `Bearer ${token}`,          
+      },
+    }).then((response) => {
+      console.log(response)
+      // dispatch(setPost(response.data))
+    })
     
-  
-}}
+
+  }
+
+}
 
 
 
@@ -132,6 +145,7 @@ const actionCreators = {
   addPostDB,
   getPostDB,
   deletePostDB,
+  // getOnePostDB,
 };
 
 export { actionCreators };
