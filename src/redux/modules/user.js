@@ -2,28 +2,25 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { setCookie, deleteCookie } from "./Cookie";
 import axios from "axios"
-
 // actions
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
-
 // action creators
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
-
 // initialState
 const initialState = {
   user: null,
   is_login: false,
 };
-
 // middleware
 const signupDB = (id, pwd, pwdCheck, url, ) => {
-  return async function (dispatch, getState, { history }) {
+  return function (dispatch, getState, { history }) {
 // axios 연결하기
-    await axios({
+    console.log(id,pwd,)
+    axios({
       method: 'post',
       url: 'http://15.164.163.116/api/signup',
       data: {
@@ -42,10 +39,16 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
           userImageUrl: url,
         })
       );
-    }).catch((err)=>{console.log(err)})
+      window.alert(`${response.data.id}님 환영합니다! :)`)
+      history.push('/login')
+    })
+    .catch((error)=>{
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      window.alert("회원가입에 실패했습니다! 다시 시도해주세요")
+      console.log(errorCode,errorMessage)})
   };
 };
-
 const loginDB = (id, pwd) => {
   return function (dispatch, getState, { history }) {
   //axios 연결하기
@@ -65,18 +68,17 @@ const loginDB = (id, pwd) => {
           userId: id,
         })
       );
+      window.alert(`${response.data.id}님 환영합니다! :)`)
+      history.push("/");
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-
+      window.alert("로그인에 실패했습니다! 다시 시도해주세요")
       console.log(errorCode, errorMessage);
     });
-
-    history.push("/");
   };
 };
-
 const loginCheckDB = () => {
   const token = sessionStorage.getItem("token");
   return function (dispatch, getState, {history}){
@@ -101,7 +103,6 @@ const loginCheckDB = () => {
     })
   }
 }
-
 const logoutDB = () => {
   return function (dispatch, getState, {history}) {
       sessionStorage.clear();
@@ -109,7 +110,6 @@ const logoutDB = () => {
       history.replace('/');
     }
 }
-
 // reducer
 export default handleActions(
   {
@@ -132,7 +132,6 @@ export default handleActions(
   },
   initialState
 );
-
 // action creator export
 const actionCreators = {
   setUser,
@@ -143,5 +142,4 @@ const actionCreators = {
   loginCheckDB,
   logoutDB,
 };
-
 export { actionCreators };
