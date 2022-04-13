@@ -37,13 +37,6 @@ const initialState = {
 };
 
 //middleware
-export const editCommentDB =
-  (id, coId, newContent, setEditMode) => async (dispatch) => {
-    await axios.edit(id, coId, newContent);
-    // dispatch(editComment(coId, data));
-    setEditMode(false);
-  };
-
 // (*) async getComments()
 // make axios.get call here (?)
 
