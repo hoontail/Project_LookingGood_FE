@@ -17,10 +17,10 @@ const initialState = {
 };
 // middleware
 const signupDB = (id, pwd, pwdCheck, url, ) => {
-  return function (dispatch, getState, { history }) {
+  return async function (dispatch, getState, { history }) {
 // axios 연결하기
     console.log(id,pwd,)
-    axios({
+    await axios({
       method: 'post',
       url: 'http://15.164.163.116/api/signup',
       data: {
@@ -50,9 +50,9 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
   };
 };
 const loginDB = (id, pwd) => {
-  return function (dispatch, getState, { history }) {
+  return async function (dispatch, getState, { history }) {
   //axios 연결하기
-    axios({
+   await axios({
       method: 'post',
       url: 'http://15.164.163.116/api/login',
       data: {
@@ -67,7 +67,8 @@ const loginDB = (id, pwd) => {
         getUser({
           userId: id,
         })
-      );
+
+      );dispatch(loginCheckDB())
       window.alert(`${response.data.id}님 환영합니다! :)`)
       history.push("/");
     })
@@ -81,8 +82,8 @@ const loginDB = (id, pwd) => {
 };
 const loginCheckDB = () => {
   const token = sessionStorage.getItem("token");
-  return function (dispatch, getState, {history}){
-    axios({
+  return async function (dispatch, getState, {history}){
+    await axios({
       method: 'get',
       url: 'http://15.164.163.116/api/checkLogin',
       headers: {
@@ -97,6 +98,7 @@ const loginCheckDB = () => {
             userImageUrl: user.data.userImageUrl,
           })
         );
+        
       }else{
         dispatch(logOut());
     }
@@ -104,7 +106,7 @@ const loginCheckDB = () => {
   }
 }
 const logoutDB = () => {
-  return function (dispatch, getState, {history}) {
+  return async function (dispatch, getState, {history}) {
       sessionStorage.clear();
       dispatch(logOut());
       history.replace('/');
