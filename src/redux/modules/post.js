@@ -57,7 +57,7 @@ const getPostDB = () => {
       .get("http://15.164.163.116/api/post")
       .then((response) => {
         dispatch(setPost(response.data.list))
-  
+  console.log(response);
    
       })
       .catch((error) => {

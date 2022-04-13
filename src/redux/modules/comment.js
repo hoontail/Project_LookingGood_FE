@@ -31,7 +31,7 @@ const initialState = {
     {
       id: "0",
       name: "haha",
-      comment: "hoho"
+      comment: "hoho",
     },
   ],
 };
@@ -48,21 +48,24 @@ export const getCommentsDB = (commentIds) => async (dispatch, getState) => {
   } catch (e) {}
 };
 
-export const addCommentDB = (postId, token, comment) => {
+export const addCommentDB = (token, comment, postId) => {
   return function (dispatch, getState) {
+    console.log(token, comment, postId);
     axios
       .post({
-        url: "https://62565de452d8738c692e515a.mockapi.io/comments",
+        url: `http://15.164.163.116/api/comments/save/${postId}`,
         data: {
-          postId: postId,
-          comment: comment,
+          content: comment,
         },
         headers: {
-          Authorization: `Bearer${token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then(function (response) {
         console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   };
 };
@@ -130,7 +133,7 @@ export default handleActions(
 const actionCreators = {
   addCommentDB,
   getCommentsDB,
-  editCommentDB,
+
   deleteCommentDB,
 };
 
