@@ -11,6 +11,7 @@ import {
   deleteCommentDB,
 } from "../redux/modules/comment";
 import { now } from "moment";
+import { useParams } from "react-router-dom";
 
 /**
  *  
@@ -88,6 +89,21 @@ const DetailPage = (props) => {
     setComment(e.target.value);
   };
 
+const DetailPage = (props) => {
+  const history = useHistory();
+  const params = useParams()
+  const post_list = useSelector((state) => state.post.list);
+  const user_info = useSelector((state) => state.User)
+  
+console.log(user_info)
+  
+ const post = post_list.find(p => p._id === params.postid)
+ console.log(post)
+  
+ 
+ const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+
   const postComment = () => {
     dispatch(addCommentDB(token, comment));
     setComment("");
@@ -100,26 +116,24 @@ const DetailPage = (props) => {
   return (
     <Main>
       <BigBox>
-        <ImageRect src={"http://via.placeholder.com/400x300"} />
+        <ImageRect src={post.imageUrl} />
         <Box>
           <NameTag>
-            <ImageCircle />
-            <Text>Sungyoung Lee</Text>
+            <ImageCircle src={user_info.userImageUrl}/>
+            <Text>{user_info.userId}</Text>
           </NameTag>
           <PosterBox>
             <Text>
-              여기에는 글 내용이 들어가는 곳 인데 여기에 글 내용이 들어갈까라고
-              생각했는데 확실히 들어가겠지만 그래도 혹시 모르니까 좀더 적어볼게
-              안녕 션 반가워
+            <h3>{post.title}</h3> 
+             <p/>{post.content}
             </Text>
           </PosterBox>
 
           {/* Option 1 */}
           <Box1>
-            {/* {comment_list[postId].map((comment) => ( */}
-            {comment_list.map((comment, idx) => (
-              <SmallBox key={comment.id}>
-                <ImageCircle />
+            {comments.map((comment) => (
+              <SmallBox>
+                <ImageCircle src={user_info.userImageUrl}/>
                 <Text>{comment.name}</Text>
                 <Text> {comment.comment}</Text>
                 <Text1> {new Date().toUTCString()}</Text1>
@@ -182,6 +196,10 @@ const Button = styled.button`
   padding: 0.6em 0.8em;
   border-radius: 50px;
   font-size: medium;
+  cursor: pointer;
+  &:hover{
+    border: 3px solid #394481;
+  }
 `;
 
 const SmallBox = styled.div`
@@ -233,7 +251,7 @@ const ImageRect = styled.div`
   /* position: relative; */
   /* padding-top: 75%; */
   /* overflow: hidden; */
-  background-image: url("https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F13%2F2017%2F07%2F15%2FDwightSchrute-e1500140903345.jpg&q=60");
+  background-image: url(${props =>(props.src)});
   background-size: cover;
 `;
 
@@ -241,7 +259,7 @@ const ImageCircle = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50px;
-  background-image: url("https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F13%2F2017%2F07%2F15%2FDwightSchrute-e1500140903345.jpg&q=60");
+  background-image: url(${props =>(props.src)});
   background-size: cover;
   margin: 3px;
 `;
