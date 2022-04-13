@@ -25,7 +25,7 @@ const signupDB = (id, pwd, pwdCheck, url, ) => {
 // axios 연결하기
     axios({
       method: 'post',
-      url: 'http://3.35.174.45/api/signup',
+      url: 'http://15.164.163.116/api/signup',
       data: {
         userId: id,
         password: pwd,
@@ -52,7 +52,7 @@ const loginDB = (id, pwd) => {
   //axios 연결하기
     axios({
       method: 'post',
-      url: 'http://3.35.174.45/api/login',
+      url: 'http://15.164.163.116/api/login',
       data: {
         userId: id,
         password : pwd,
@@ -85,7 +85,7 @@ const loginCheckDB = () => {
   return function (dispatch, getState, {history}){
     axios({
       method: 'get',
-      url: 'http://3.35.174.45/api/users/me',
+      url: 'http://15.164.163.116/api/users/me',
       headers: {
         authorization: `Bearer ${token}`
       }

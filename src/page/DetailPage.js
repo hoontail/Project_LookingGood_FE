@@ -16,11 +16,22 @@ const DetailPage = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
-  const postId = useSelector((state) => state.post);
-
-  const list = [1, 2, 3];
-
+  const postId = useSelector(state => state.post);
+  const comment_list = useSelector(state => state.post);
+  console.log(comment_list, postId);
   const [comment, setComment] = useState();
+
+  React.useEffect(() => {
+    if(!comment_list[postId]){
+      // 코멘트 정보가 없으면 불러오기
+      dispatch(getCommentsDB(postId));
+    }
+  }, []);
+
+  // comment가 없거나, post_id가 없으면 아무것도 안넘겨준다!
+  if(!comment_list[postId] || !postId){
+    return null;
+  }
 
   console.log(postId, token);
   const onChange = (e) => {
@@ -31,6 +42,8 @@ const DetailPage = (props) => {
     dispatch(addCommentDB(postId, token, comment));
     setComment("");
   };
+
+
 
   return (
     <Main>
@@ -51,8 +64,8 @@ const DetailPage = (props) => {
 
           {/* Option 1 */}
           <Box1>
-            {list.map((comment) => (
-              <SmallBox>
+            {comment_list[postId].map((comment) => (
+              <SmallBox key={comment.id}>
                 <ImageCircle />
                 <Text>{comment.name}</Text>
                 <Text> {comment.comment}</Text>
