@@ -44,16 +44,14 @@ const DetailPage = (props) => {
         <ImageRect src={post.imageUrl} />
         <Box>
           <NameTag>
-            <ImageCircle src={user_info.userImageUrl} />
-            <Text>{user_info.userId}</Text>
+            <ImageCircle src={post.userImageUrl} />
+            <Text>{post.userId}</Text>
           </NameTag>
           <PosterBox>
             <Text>
-
-
               <div>{post.title}</div>
 
-              <br/>
+              <br />
               {post.content}
             </Text>
           </PosterBox>
