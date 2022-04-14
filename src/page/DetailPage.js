@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentsActions } from "../redux/modules/comment";
 import { actionCreators as postActions } from "../redux/modules/post";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+
 
 const DetailPage = (props) => {
   const [comment, setComment] = useState("");
@@ -60,8 +62,8 @@ const DetailPage = (props) => {
             <Text>{post.userId}</Text>
 
             <BtnGroup>
-              <EDBtn>수정하기</EDBtn>
-              <EDBtn onClick={deletePost}>삭제하기</EDBtn>
+              <FiEdit />
+              <FiTrash2 onClick={deletePost}>삭제하기</FiTrash2>
             </BtnGroup>
           </NameTag>
           <PosterBox>
@@ -82,7 +84,7 @@ const DetailPage = (props) => {
                   <Text> {comment.comment}</Text>
                   <Text1> {comment.createAt}</Text1>
                   {comment.userId == checkLog() ? (
-                    <Button onClick={() => deleteComment(comment._id)} />
+                    <FiTrash2 onClick={() => deleteComment(comment._id)} />
                   ) : null}
                 </Group1>
               </SmallBox>
@@ -235,5 +237,6 @@ const BtnGroup = styled.div`
 const Group1 = styled.div`
 justify-content: space-between;
 display: flex;
+
 `;
 export default DetailPage;
