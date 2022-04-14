@@ -15,7 +15,7 @@ function PostWrite(props) {
   const fileInput = React.useRef(null);
 
   const [post, setPost] = React.useState({
-    title: "기본",
+    title: "",
     category: "SKY",
     content: "",
   });

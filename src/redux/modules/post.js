@@ -14,7 +14,7 @@ const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const getPost = createAction(GET_POST, (post) => ({ post }));
 const deletePost = createAction(DEL_POST, (postId) => ({ postId }));
-const token = sessionStorage.getItem("token");
+
 const initialState = {
  list :[
  ]
@@ -23,7 +23,7 @@ const initialState = {
 
 
 const addPostDB = (formData) => {
-  
+  const token = sessionStorage.getItem("token");
   return async function (dispatch, getState) {
     // for (var pair of formData.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
@@ -55,6 +55,7 @@ const addPostDB = (formData) => {
 };
 
 const getPostDB = () => {
+  const token = sessionStorage.getItem("token");
   return async function (dispatch, getState) {
     await axios
       .get("http://15.164.163.116/api/post")
@@ -70,6 +71,7 @@ const getPostDB = () => {
 };
 
 const deletePostDB =(postId) => {
+  const token = sessionStorage.getItem("token");
   return async function (dispatch, getState, {history}){
     await axios({
       method: "DELETE",
