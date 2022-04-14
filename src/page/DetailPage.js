@@ -7,23 +7,22 @@ import { getCookie } from "../redux/modules/Cookie";
 import { now } from "moment";
 import { actionCreators as commentsActions } from "../redux/modules/comment";
 import { actionCreators as postActions } from "../redux/modules/post";
+import CloseButton from "react-bootstrap/CloseButton";
 
 const DetailPage = (props) => {
   const history = useHistory();
   const params = useParams();
   const post_list = useSelector((state) => state.post.list);
-  console.log(post_list)
   const user_info = useSelector((state) => state.User);
   const comments_list = useSelector((state) => state.comment.comments);
-
+  console.log(comments_list);
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
-
+ 
   const post = post_list.find((p) => p._id === params.postid);
-
+ 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-
 
   useEffect(() => {
     dispatch(commentsActions.getCommentsDB(post._id));
@@ -31,23 +30,24 @@ const DetailPage = (props) => {
 
   const postComment = () => {
     dispatch(commentsActions.addCommentDB(token, comment, post._id));
-
     setComment("");
 
     // Dispatch Post Comment Action.
     // dispatch(POST_COMMENT)
   };
+
   const onChange = (e) => {
     setComment(e.target.value);
   };
 
   const deletePost = () => {
-    dispatch(postActions.deletePostDB(post._id))
-  
-  }
+    dispatch(postActions.deletePostDB(post._id));
+  };
 
-
-
+  const deleteComment = (Id) => {
+    dispatch(commentsActions.deleteCommentDB(Id));
+    console.log(Id);
+  };
 
   return (
     <Main>
@@ -59,10 +59,9 @@ const DetailPage = (props) => {
             <Text>{post.userId}</Text>
 
             <BtnGroup>
-            <EDBtn>수정하기</EDBtn>
-            <EDBtn onClick = {deletePost}>삭제하기</EDBtn>
-          </BtnGroup>
-
+              <EDBtn>수정하기</EDBtn>
+              <EDBtn onClick={deletePost}>삭제하기</EDBtn>
+            </BtnGroup>
           </NameTag>
           <PosterBox>
             <Text>
@@ -81,6 +80,7 @@ const DetailPage = (props) => {
                 <Text>{comment.userId}</Text>
                 <Text> {comment.comment}</Text>
                 <Text1> {comment.createAt}</Text1>
+                <CloseButton onClick={() => deleteComment(comment._id) } />
               </SmallBox>
             ))}
           </Box1>
@@ -192,6 +192,7 @@ const ImageRect = styled.div`
   border-radius: 30px;
   display: flex;
   width: 500px;
+  min-width: 50px;
   height: 600px;
   /* position: relative; */
   /* padding-top: 75%; */
@@ -227,12 +228,11 @@ const Text1 = styled.div`
 `;
 
 const EDBtn = styled.button`
-padding : 5px;
-margin-left: 10px;
-
-`
+  padding: 5px;
+  margin-left: 10px;
+`;
 const BtnGroup = styled.div`
-padding: 16px;
-margin-left: 65px;
-`
+  padding: 16px;
+  margin-left: 65px;
+`;
 export default DetailPage;
