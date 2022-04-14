@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentsActions } from "../redux/modules/comment";
 import { actionCreators as postActions } from "../redux/modules/post";
-import CloseButton from "react-bootstrap/CloseButton";
 
 const DetailPage = (props) => {
   const [comment, setComment] = useState("");
@@ -79,16 +78,18 @@ const DetailPage = (props) => {
               <SmallBox>
                 <ImageCircle src={comment.userImageUrl} />
                 <Text>{comment.userId}</Text>
-                <Text> {comment.comment}</Text>
-                <Text1> {comment.createAt}</Text1>
-                {comment.userId == checkLog() ? (
-                  <CloseButton onClick={() => deleteComment(comment._id)} />
-                ) : null}
+                <Group1>
+                  <Text> {comment.comment}</Text>
+                  <Text1> {comment.createAt}</Text1>
+                  {comment.userId == checkLog() ? (
+                    <Button onClick={() => deleteComment(comment._id)} />
+                  ) : null}
+                </Group1>
               </SmallBox>
             ))}
           </Box1>
 
-          <SmallBox>
+          <SmallBox1>
             <Input
               placeholder="Leave a comment here"
               value={comment}
@@ -102,7 +103,7 @@ const DetailPage = (props) => {
             >
               Submit
             </Button>
-          </SmallBox>
+          </SmallBox1>
         </Box>
       </BigBox>
     </Main>
@@ -118,7 +119,6 @@ const NameTag = styled.div`
 const PosterBox = styled.div`
   display: flex;
   float: left;
-  height: 150px;
 `;
 
 const Main = styled.div`
@@ -126,7 +126,7 @@ const Main = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: #fafafa;
-  padding-top: 50px;
+  padding-top: 20px;
   height: 100%;
 `;
 const Button = styled.button`
@@ -151,6 +151,14 @@ const SmallBox = styled.div`
   float: left;
 `;
 
+const SmallBox1 = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: left;
+  align-items: flex-end;
+  float: left;
+`;
+
 const BigBox = styled.div`
   margin: auto;
   display: flex;
@@ -159,31 +167,30 @@ const BigBox = styled.div`
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   border: 1px solid #394481;
   padding: 0 1em;
   margin: 1em;
-  width: 400px;
-  height: 600px;
+  width: 600px;
+  height: 700px;
   border-radius: 30px;
 `;
 
 const Box1 = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   height: 300px;
   overflow: auto;
-  width: 350px;
+  width: 560px;
   height: 300px;
 `;
 
 const ImageRect = styled.div`
   border-radius: 30px;
   display: flex;
-  width: 500px;
-  min-width: 50px;
-  height: 600px;
+  width: 600px;
+  height: 700px;
   background-image: url(${(props) => props.src});
   background-size: cover;
 `;
@@ -191,6 +198,7 @@ const ImageRect = styled.div`
 const ImageCircle = styled.div`
   width: 50px;
   height: 50px;
+  min-width: 50px;
   border-radius: 50px;
   background-image: url(${(props) => props.src});
   background-size: cover;
@@ -221,5 +229,11 @@ const EDBtn = styled.button`
 const BtnGroup = styled.div`
   padding: 16px;
   margin-left: 65px;
+  display: flex;
+`;
+
+const Group1 = styled.div`
+justify-content: space-between;
+display: flex;
 `;
 export default DetailPage;
