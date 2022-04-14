@@ -59,9 +59,7 @@ const DetailPage = (props) => {
 
   const deletePost = () => {
 
-  if(!post.userId){
-    return;
-  }
+
   dispatch(postActions.deletePostDB(params.postid));
   };
 
@@ -69,7 +67,9 @@ const DetailPage = (props) => {
     dispatch(commentsActions.deleteCommentDB(Id));
     console.log(Id);
   };
-
+  if(!post.userId){
+    return;
+  }
   return (
     <Main>
       <BigBox>

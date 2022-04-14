@@ -30,7 +30,6 @@ const addPostDB = (formData) => {
     // for (var pair of formData.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
     // }
-    const token = sessionStorage.getItem("token");
     try {
       await axios({
         method: "post",

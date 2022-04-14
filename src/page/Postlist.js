@@ -10,8 +10,6 @@ const Postlist = (props) => {
   const post_list = useSelector((state) => state.post.list);
   const history = useHistory();
 
-
-
   React.useEffect(() => {
 
       dispatch(postActions.getPostDB());
