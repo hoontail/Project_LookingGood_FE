@@ -11,28 +11,29 @@ import { actionCreators as postActions } from "../redux/modules/post";
 const DetailPage = (props) => {
   const history = useHistory();
   const params = useParams();
-  const post_list = useSelector((state) => state.post.list);
+
   const user_info = useSelector((state) => state.User);
   const comments_list = useSelector((state) => state.comment.comments);
-
+  const post = useSelector((state) => state.post.detail);
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
-  let post = post_list.find((p) => p._id === params.postid);
+  // let post = post_list.find((p) => p._id === params.postid);
   
-
+ 
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
   useEffect(() => {
+    dispatch(postActions.getOnePostDB(params.postid))
     dispatch(commentsActions.getCommentsDB(post._id));
     // localStorage.post = JSON.stringify(post)
     
   }, []);
 
 
-    
-
+  
+ console.log(post)
 
 
   const postComment = () => {
@@ -56,7 +57,9 @@ const DetailPage = (props) => {
   const deletePost = () => {
     dispatch(postActions.deletePostDB(post._id));
   };
-
+  if (!post.userId){
+    return(<></>)
+  }
   return (
     <Main>
       <BigBox>
