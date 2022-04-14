@@ -23,14 +23,13 @@ const Postlist = (props) => {
   return (
     <>
       <div className="container">
-        {post_list
-          .filter((a) => {
+        {post_list?.filter((a) => {
             return a.category == params.category;
           })
           .map((p, idx) => {
             return (
               <figure key={p._id}>
-                <img
+                <img alt="#"
                   src={p.imageUrl}
                   onClick={() => {
                     history.push(`/detail/${p._id}`);

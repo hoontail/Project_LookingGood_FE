@@ -5,18 +5,19 @@ import { actionCreators as imageActions } from "./image";
 
 
 const SET_POST = "SET_POST";
+const SET_ONE_POST = "SET_ONE_POST";
 const ADD_POST = "ADD_POST";
 const GET_POST = "GET_POST";
-// const DEL_POST = "DEL_POST"
+const DEL_POST = "DEL_POST";
 
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
+const setOnePost = createAction(SET_ONE_POST, (post) => ({ post }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const getPost = createAction(GET_POST, (post) => ({ post }));
-// const deletePost = createAction(DEL_POST, (post) => ({ post }));
+const deletePost = createAction(DEL_POST, (postId) => ({ postId }));
 const token = sessionStorage.getItem("token");
 const initialState = {
  list :[
-  
  ]
 }
 
@@ -56,14 +57,10 @@ const addPostDB = (formData) => {
 
 const getPostDB = () => {
   return async function (dispatch, getState) {
-
-   
     await axios
       .get("http://15.164.163.116/api/post")
       .then((response) => {
         dispatch(setPost(response.data.list))
-  
-   
       })
       .catch((error) => {
         console.log(error);
@@ -72,9 +69,8 @@ const getPostDB = () => {
   };
 };
 
-
 const deletePostDB =(postId) => {
-  return async function (dispatch, getState){
+  return async function (dispatch, getState, {history}){
     await axios({
       method: "DELETE",
       url: `http://15.164.163.116/api/post/delete/${postId}`,
@@ -82,25 +78,33 @@ const deletePostDB =(postId) => {
         "Content-Type": "multipart/form-data",
         authorization: `Bearer ${token}`,          
       },
-    });
+    }).then((response) => {
+      // dispatch(deletePost(postId))
+      history.replace('/')
+    })
 
   }
 
 }
 
-
-
-
-
-const getOnePostDB = () =>{
+const getOnePostDB =(postId) => {
   return async function (dispatch, getState){
+    await axios({
+      method: "GET",
+      url: `http://15.164.163.116/api/post/detail/${postId}`,
+      headers: {
+        authorization: `Bearer ${token}`,          
+      },
+    }).then((response) => {
+      dispatch(setOnePost(response.data))
+    }).catch((err) => {
+      console.log(err.message)
+    })
     
-  
-}}
 
+  }
 
-
-
+}
 
 
 export default handleActions(
@@ -113,24 +117,32 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.post_list;
       }),
+    [SET_ONE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.post.post;
+      }),
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
       }),
-    // [DEL_POST]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.list = action.payload.post;
-    //   }),
+    [DEL_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = draft.list.filter((d) => d.id !== action.payload.postId)
+      }),
   },
   initialState
 );
 
 const actionCreators = {
   setPost,
+  setOnePost,
   addPost,
+  getPost,
+  deletePost,
   addPostDB,
   getPostDB,
   deletePostDB,
+  getOnePostDB
 };
 
 export { actionCreators };
