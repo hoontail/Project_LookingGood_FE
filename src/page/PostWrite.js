@@ -15,7 +15,7 @@ function PostWrite(props) {
   const fileInput = React.useRef(null);
 
   const [post, setPost] = React.useState({
-    title: "",
+    title: "기본",
     category: "SKY",
     content: "",
   });
@@ -53,8 +53,8 @@ function PostWrite(props) {
     
 
   //  폼데이터 콘솔 찍기
-  for (var pair of formData.entries()) {
-}
+//   for (var pair of formData.entries()) {
+// }
   const addPostDB = () => {
     if (post.title === "" || post.content === "") {
       window.alert("내용을 추가 해주세요");
@@ -73,13 +73,14 @@ function PostWrite(props) {
         <h2>게시글 작성</h2>
         <AddBox>
           <Category _onChange={handleForm} />
-          <Input
+          {/* <Input
             name="title"
             placeholder="제목을 입력 해주세요"
             value={post.title}
             _onChange={handleForm}
-          ></Input>
+          ></Input> */}
           <Image
+         
             shape="rectangle"
             src={
               preview
@@ -89,6 +90,7 @@ function PostWrite(props) {
           />
           <AddImage type="file" ref={fileInput} onChange={selectFile} />
           <Input
+          
             multiLine
             name="content"
             value={post.content}
@@ -126,6 +128,7 @@ const AddImage = styled.input`
   cursor: pointer;
   margin: 16px 0px;
   display: flex;
+  width: 35vw;
 `;
 
 const AddBtn = styled.button`

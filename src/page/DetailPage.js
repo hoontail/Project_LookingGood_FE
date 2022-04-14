@@ -1,26 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentsActions } from "../redux/modules/comment";
 import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as userActions } from "../redux/modules/user";
-import CloseButton from "react-bootstrap/CloseButton";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 const DetailPage = (props) => {
-
-  const token = sessionStorage.getItem("token");
-  
+  const [comment, setComment] = useState("");
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const post = useSelector((state) => state.post.list);
-  const user_info = useSelector((state) => state.User);
+  const token = sessionStorage.getItem("token");
+  const post_list = useSelector((state) => state.post.list);
+  const post = post_list.find((p) => p._id === params.postid);
   const comments_list = useSelector((state) => state.comment.comments);
-
-  const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState("");
-
+  const user_info = useSelector((state) => state.User);
   const parseToken = (token = null) => {
     try {
       return JSON.parse(atob(token.split(".")[1]));
@@ -34,19 +29,13 @@ const DetailPage = (props) => {
       return current_id.userId;
     }
   };
-  React.useEffect(() => {
-      dispatch(postActions.getOnePostDB(params.postid));
-      dispatch(commentsActions.getCommentsDB(params.postid));
-    
+
+  useEffect(() => {
+    dispatch(commentsActions.getCommentsDB(post._id));
   }, []);
 
   const postComment = () => {
-    if(comment ===""){	
-      window.alert("내용을 입력 해주세요")	
-      return	
-    }	
-    dispatch(commentsActions.addCommentDB(token, comment, params.postid));
-
+    dispatch(commentsActions.addCommentDB(token, comment, post._id));
     setComment("");
   };
 
@@ -55,16 +44,22 @@ const DetailPage = (props) => {
   };
 
   const deletePost = () => {
-
-  if(!post.userId){
-    return;
-  }
-  dispatch(postActions.deletePostDB(params.postid));
+    if (window.confirm("당신의 추억을 삭제하시겠습니까?")) {
+      dispatch(postActions.deletePostDB(post._id));
+      window.alert("추억이 삭제되었습니다.");
+      history.goBack();
+    } else {
+      return;
+    }
   };
 
   const deleteComment = (Id) => {
-    dispatch(commentsActions.deleteCommentDB(Id));
-    console.log(Id);
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      dispatch(commentsActions.deleteCommentDB(Id));
+      window.alert("댓글이 삭제되었습니다.");
+    } else {
+      return;
+    }
   };
 
   return (
@@ -74,26 +69,18 @@ const DetailPage = (props) => {
         <Box>
           <NameTag>
             <N>
-            <ImageCircle src={post.userImageUrl} />
-            <h5>{post.userId}</h5>
+              <ImageCircle src={post.userImageUrl} />
+              <h5>{post.userId}</h5>
             </N>
-
             <BtnGroup>
-            {post.userId === user_info.user.userId ? (	
-                <>	
-                  <EDBtn onClick={()=>{	
-                    history.push("/edit/"+post._id)	
-                  }}>수정</EDBtn>	
-                  <EDBtn onClick={deletePost}>삭제</EDBtn>	
-                </>	
-              ) : (	
-                null	
-              )}
+              {post.userId === user_info.user.userId ? (
+                <FiTrash2 onClick={deletePost}>삭제하기</FiTrash2>
+              ) : null}
             </BtnGroup>
           </NameTag>
           <PosterBox>
             <Text>
-              <div style={{ fontSize : "20px"}}>{post.title}</div>
+              <div>{post.title}</div>
 
               <br />
               {post.content}
@@ -105,16 +92,22 @@ const DetailPage = (props) => {
               <SmallBox>
                 <ImageCircle src={comment.userImageUrl} />
                 <Text>{comment.userId}</Text>
-                <Text> {comment.comment}</Text>
-                <Text1> {comment.createAt}</Text1>
-                {comment.userId == checkLog() ? (
-                  <CloseButton onClick={() => deleteComment(comment._id)} />
-                ) : null}
+                <Group1>
+                  <Text> {comment.comment}</Text>
+                  <Text1> {comment.createAt}</Text1>
+                  {comment.userId == checkLog() ? (
+                    <FiTrash2
+                      onClick={() => {
+                        deleteComment(comment._id);
+                      }}
+                    />
+                  ) : null}
+                </Group1>
               </SmallBox>
             ))}
           </Box1>
 
-          <SmallBox>
+          <SmallBox1>
             <Input
               placeholder="Leave a comment here"
               value={comment}
@@ -128,7 +121,7 @@ const DetailPage = (props) => {
             >
               Submit
             </Button>
-          </SmallBox>
+          </SmallBox1>
         </Box>
       </BigBox>
     </Main>
@@ -140,12 +133,14 @@ const NameTag = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+  justify-content: space-between;
 `;
 
 const PosterBox = styled.div`
   display: flex;
-  float: left;
-  height: 150px;
+  padding: 0px 16px;
+  margin-bottom: 20px;
+  align-items: flex-start;
 `;
 
 const Main = styled.div`
@@ -153,7 +148,7 @@ const Main = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: #fafafa;
-  padding-top: 50px;
+  padding-top: 20px;
   height: 100%;
 `;
 const Button = styled.button`
@@ -178,6 +173,14 @@ const SmallBox = styled.div`
   float: left;
 `;
 
+const SmallBox1 = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: left;
+  align-items: flex-end;
+  float: left;
+`;
+
 const BigBox = styled.div`
   margin: auto;
   display: flex;
@@ -186,31 +189,30 @@ const BigBox = styled.div`
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  border: 1px solid gray;
+  justify-content: space-between;
+  border: 1px solid #394481;
   padding: 0 1em;
   margin: 1em;
-  width: 400px;
-  height: 600px;
+  width: 600px;
+  height: 700px;
   border-radius: 30px;
 `;
 
 const Box1 = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   height: 300px;
   overflow: auto;
-  width: 350px;
+  width: 560px;
   height: 300px;
 `;
 
 const ImageRect = styled.div`
   border-radius: 30px;
   display: flex;
-  width: 500px;
-  min-width: 50px;
-  height: 600px;
+  width: 600px;
+  height: 700px;
   background-image: url(${(props) => props.src});
   background-size: cover;
 `;
@@ -219,6 +221,7 @@ const ImageCircle = styled.div`
   min-width: 50px;
   width: 50px;
   height: 50px;
+  min-width: 50px;
   border-radius: 50px;
   background-image: url(${(props) => props.src});
   background-size: cover;
@@ -249,13 +252,19 @@ const EDBtn = styled.button`
 const BtnGroup = styled.div`
   padding: 16px;
   margin-left: 65px;
-  flex-direction: column;
+  display: flex;
+`;
+
+const Group1 = styled.div`
+  justify-content: space-between;
+  display: flex;
 `;
 
 const N = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`
+  padding: 16px 4px;
+`;
 
 export default DetailPage;

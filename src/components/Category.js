@@ -29,4 +29,5 @@ const Choice = styled.select`
   border: none;
   border-bottom: 1px solid black;
   font-size: 20px;
+  margin: 5px 0px 25px 0px;
 `;
