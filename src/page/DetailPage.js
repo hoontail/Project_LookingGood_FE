@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentsActions } from "../redux/modules/comment";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 
-
 const DetailPage = (props) => {
   const [comment, setComment] = useState("");
+  const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
@@ -44,12 +44,22 @@ const DetailPage = (props) => {
   };
 
   const deletePost = () => {
-    dispatch(postActions.deletePostDB(post._id));
+    if (window.confirm("당신의 추억을 삭제하시겠습니까?")) {
+      dispatch(postActions.deletePostDB(post._id));
+      window.alert("추억이 삭제되었습니다.");
+      history.goBack();
+    } else {
+      return;
+    }
   };
 
   const deleteComment = (Id) => {
-    dispatch(commentsActions.deleteCommentDB(Id));
-    console.log(Id);
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      dispatch(commentsActions.deleteCommentDB(Id));
+      window.alert("댓글이 삭제되었습니다.");
+    } else {
+      return;
+    }
   };
 
   return (
@@ -84,7 +94,11 @@ const DetailPage = (props) => {
                   <Text> {comment.comment}</Text>
                   <Text1> {comment.createAt}</Text1>
                   {comment.userId == checkLog() ? (
-                    <FiTrash2 onClick={() => deleteComment(comment._id)} />
+                    <FiTrash2
+                      onClick={() => {
+                        deleteComment(comment._id);
+                      }}
+                    />
                   ) : null}
                 </Group1>
               </SmallBox>
@@ -235,8 +249,7 @@ const BtnGroup = styled.div`
 `;
 
 const Group1 = styled.div`
-justify-content: space-between;
-display: flex;
-
+  justify-content: space-between;
+  display: flex;
 `;
 export default DetailPage;
