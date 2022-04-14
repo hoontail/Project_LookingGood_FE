@@ -6,27 +6,20 @@ import { act } from "react-dom/test-utils";
 
 
 const SET_POST = "SET_POST";
+const SET_ONE_POST = "SET_ONE_POST";
 const ADD_POST = "ADD_POST";
 const GET_POST = "GET_POST";
-const SET_ONE_POST = "SET_ONE_POST"
+const DEL_POST = "DEL_POST";
 
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
-const addPost = createAction(ADD_POST, (post) => ({ post }));
 const setOnePost = createAction(SET_ONE_POST, (post) => ({ post }));
-
-
+const addPost = createAction(ADD_POST, (post) => ({ post }));
+const getPost = createAction(GET_POST, (post) => ({ post }));
+const deletePost = createAction(DEL_POST, (postId) => ({ postId }));
+const token = sessionStorage.getItem("token");
 const initialState = {
  list :[
-  
- ],
- detail:{
-   category:"",
-   content:"",
-   imageUrl:"",
-   title:"",
-   userId:"",
-   userImageUrl:"",
- }
+ ]
 }
 
 
@@ -66,15 +59,11 @@ const addPostDB = (formData) => {
 
 const getPostDB = () => {
   return async function (dispatch, getState) {
-
-   
     await axios
       .get("http://15.164.163.116/api/post")
       .then((response) => {
        
         dispatch(setPost(response.data.list))
-  console.log(response.data.list)
-   
       })
       .catch((error) => {
         console.log(error);
@@ -83,27 +72,25 @@ const getPostDB = () => {
   };
 };
 
-
 const deletePostDB =(postId) => {
-  return async function (dispatch, getState){
-    const token = sessionStorage.getItem("token");
+  return async function (dispatch, getState, {history}){
     await axios({
       method: "DELETE",
       url: `http://15.164.163.116/api/post/delete/${postId}`,
       headers: {
         authorization: `Bearer ${token}`,          
       },
-    });
+    }).then((response) => {
+      // dispatch(deletePost(postId))
+      history.replace('/')
+    })
 
   }
 
 }
 
-
-
 const getOnePostDB =(postId) => {
   return async function (dispatch, getState){
-    const token = sessionStorage.getItem("token");
     await axios({
       method: "GET",
       url: `http://15.164.163.116/api/post/detail/${postId}`,
@@ -111,21 +98,15 @@ const getOnePostDB =(postId) => {
         authorization: `Bearer ${token}`,          
       },
     }).then((response) => {
-      console.log(response)
-      dispatch(setOnePost(response.data.post))
-
+      dispatch(setOnePost(response.data))
     }).catch((err) => {
-      console.log(err)
+      console.log(err.message)
     })
     
 
   }
 
 }
-
-
-
-
 
 
 export default handleActions(
@@ -144,11 +125,18 @@ export default handleActions(
         draft.detail = action.payload.post;
       
       }),
+    [SET_ONE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.post.post;
+      }),
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
       }),
-
+    [DEL_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = draft.list.filter((d) => d.id !== action.payload.postId)
+      }),
   },
   initialState
 );
@@ -156,12 +144,12 @@ export default handleActions(
 const actionCreators = {
   setPost,
   addPost,
+  getPost,
+  deletePost,
   addPostDB,
   getPostDB,
   deletePostDB,
-  getOnePostDB,
-  setOnePost,
- 
+  getOnePostDB
 };
 
 export { actionCreators };

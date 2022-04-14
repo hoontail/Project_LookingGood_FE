@@ -1,14 +1,13 @@
 import React from "react";
 import Header from "./Header";
 import { Login, Signup, Main, PostWrite, Postlist, DetailPage, PostEdit} from "../page/pages";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {actionCreators as userActions} from "../redux/modules/user"
-import { actionCreators as imageActions } from "../redux/modules/image";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configstore";
 import Button from "../elements/Button"
-import { Redirect } from "react-router-dom";
+
 
 
 function App() {
