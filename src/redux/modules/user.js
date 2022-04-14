@@ -63,7 +63,7 @@ const loginDB = (id, pwd) => {
     .then(async function(response) {
       sessionStorage.setItem("token", response.data.token);
       dispatch(
-        getUser({
+        setUser({
           userId: id,
         })
 

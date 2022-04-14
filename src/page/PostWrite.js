@@ -19,7 +19,6 @@ function PostWrite(props) {
     category: "SKY",
     content: "",
   });
-  console.log(post)
 
   const selectFile = (e) => {
     // console.log(e.target.files);
@@ -55,7 +54,6 @@ function PostWrite(props) {
 
   //  폼데이터 콘솔 찍기
   for (var pair of formData.entries()) {
-    console.log(pair[0]+ ', ' + pair[1]);
 }
   const addPostDB = () => {
     if (post.title === "" || post.content === "") {

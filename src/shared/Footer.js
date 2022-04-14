@@ -4,8 +4,8 @@ import styled from "styled-components";
 function Footer(props) {
   return (
     <>
-      <Team>좋은 거 같은데요?</Team>
-      <Team>FE 이태훈 이성영 김정태 BE 김윤하 윤석일 성영호 </Team>
+      <Team><P>우리조 정말 정말 좋은 거 같은데요?</P></Team>
+      <Team><P>FE 이태훈 이성영 김정태 BE 김윤하 윤석일 성영호</P> </Team>
     </>
   );
 }
@@ -19,5 +19,11 @@ const Team = styled.div`
   align-items: center;
   /* position: fixed; */
   bottom : 0;
-  background-color: gray;
+  background-color:#fafafa;
 `;
+
+const P = styled.p`
+ font-size: 13px;
+ color : gray
+ 
+`
