@@ -1,4 +1,4 @@
-import React, { useState, } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,13 +11,11 @@ const DetailPage = (props) => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const token = sessionStorage.getItem("token")
-  const post = useSelector((state) => state.post.list);
-  const user_info = useSelector((state) => state.User);
+  const token = sessionStorage.getItem("token");
+  const post_list = useSelector((state) => state.post.list);
+  const post = post_list.find((p) => p._id === params.postid);
   const comments_list = useSelector((state) => state.comment.comments);
-
- 
-
+  const user_info = useSelector((state) => state.User);
   const parseToken = (token = null) => {
     try {
       return JSON.parse(atob(token.split(".")[1]));
@@ -31,24 +29,13 @@ const DetailPage = (props) => {
       return current_id.userId;
     }
   };
-  React.useEffect(() => {
-      dispatch(postActions.getOnePostDB(params.postid));
-      dispatch(commentsActions.getCommentsDB(params.postid));
-    
+
+  useEffect(() => {
+    dispatch(commentsActions.getCommentsDB(post._id));
   }, []);
 
-
-  
- console.log(post)
-
-
   const postComment = () => {
-    if(comment ===""){	
-      window.alert("내용을 입력 해주세요")	
-      return	
-    }	
-    dispatch(commentsActions.addCommentDB(token, comment, params.postid));
-
+    dispatch(commentsActions.addCommentDB(token, comment, post._id));
     setComment("");
   };
 
@@ -74,9 +61,7 @@ const DetailPage = (props) => {
       return;
     }
   };
-  if(!post.userId){
-    return;
-  }
+
   return (
     <Main>
       <BigBox>
@@ -84,27 +69,18 @@ const DetailPage = (props) => {
         <Box>
           <NameTag>
             <N>
-            <ImageCircle src={post.userImageUrl} />
-            <h5>{post.userId}</h5>
+              <ImageCircle src={post.userImageUrl} />
+              <h5>{post.userId}</h5>
             </N>
-
             <BtnGroup>
-            {post.userId === user_info.user.userId ? (	
-                <>	
-                  <EDBtn onClick={()=>{	
-                    history.push("/edit/"+post._id)	
-                  }}>수정</EDBtn>	
-                  <EDBtn onClick={deletePost}>삭제</EDBtn>	
-                </>	
-              ) : (	
-                null	
-              )}
+              {post.userId === user_info.user.userId ? (
+                <FiTrash2 onClick={deletePost}>삭제하기</FiTrash2>
+              ) : null}
             </BtnGroup>
           </NameTag>
-
           <PosterBox>
             <Text>
-              <div style={{ fontSize : "20px"}}>{post.title}</div>
+              <div>{post.title}</div>
 
               <br />
               {post.content}
@@ -162,7 +138,9 @@ const NameTag = styled.div`
 
 const PosterBox = styled.div`
   display: flex;
-  float: left;
+  padding: 0px 16px;
+  margin-bottom: 20px;
+  align-items: flex-start;
 `;
 
 const Main = styled.div`
@@ -286,6 +264,7 @@ const N = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`
+  padding: 16px 4px;
+`;
 
 export default DetailPage;

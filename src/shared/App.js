@@ -39,7 +39,6 @@ function App() {
         <Route path="/write" component={PostWrite}/>
         <Route path="/login" component={Login}/>
         <Route path="/signup" component={Signup}/>
-        <Route path="/edit/:postid" component={PostEdit} exact/>
         <Route path="/list/:category" component={Postlist}/>
         <Route path="/detail/:postid" component={DetailPage}/>
 
