@@ -80,6 +80,9 @@ const DetailPage = (props) => {
           </NameTag>
           <PosterBox>
             <Text>
+              <div>{post.title}</div>
+
+              <br />
               {post.content}
             </Text>
           </PosterBox>

@@ -73,12 +73,12 @@ function PostWrite(props) {
         <h2>게시글 작성</h2>
         <AddBox>
           <Category _onChange={handleForm} />
-          {/* <Input
+          <Input
             name="title"
             placeholder="제목을 입력 해주세요"
             value={post.title}
             _onChange={handleForm}
-          ></Input> */}
+          ></Input>
           <Image
          
             shape="rectangle"
