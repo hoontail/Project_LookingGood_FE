@@ -57,20 +57,6 @@
 2022년 4월 8일 ~ 2022년 4월 14일 (총 7일)
 
 
-<br/>
-<br/>
-
-## 🔨 개발툴
-
--   Server: AWS EC2 (Ubuntu 18.04 LTS)
--   Framework: Express 
--   Database: MongoDB
--   Language: Javascript
--   Tool : Git, Notion
--   Platform : Node.js
-
-<br/>
-<br/>
   
   ## 🛠 구현한 기능 
   - 로그인 페이지
@@ -79,7 +65,6 @@
   - 게시글 작성 페이지
   - 목록 페이지
  
-
 
 <br/>
 <br/>
